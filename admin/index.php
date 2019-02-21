@@ -1,3 +1,47 @@
+<?php
+// SESSION INIT
+session_start();
+
+/****************/
+/* CONNEXION DB */
+/****************/
+require_once('inc/pdo.inc.php');
+
+/********************/
+/* FONCTIONS UTILES */
+/********************/
+/* TODO */
+
+/****************************/
+/* GESTION DE LA NAVIGATION */
+/****************************/
+/* TODO */
+
+/****************************/
+/* CONNEXION COLLABORATEURS */
+/****************************/
+// var init
+$warning = "";
+
+if(isset($_POST['connexion']))
+{
+  if((isset($_POST['login']) && strlen($_POST['login']) == 3) &&
+  (isset($_POST['password']) && strlen($_POST['password']) == 10))
+  {
+    $sql = "SELECT privilege_co, nom_co, prenom_co
+    FROM collaborateurs
+    WHERE id_co = '{$_POST['login']}' AND pwd_co = '{$_POST['password']}'
+    LIMIT 1;";
+
+    /*echo $sql;*/
+
+    /*$q = $db->query($sql); TODO try catch ? / fetch ?*/
+
+  } else {
+    $warning = "<p class=\"warning\">Identifiants incorrects !</p>";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -52,8 +96,19 @@
           </header>
         </div>
         <main>
-          <h2>LOREM IPSUM</h2>
-          <p>Etenim si attendere diligenter, existimare vere de omni hac causa volueritis, sic constituetis, iudices, nec descensurum quemquam ad hanc accusationem fuisse, cui, utrum vellet, liceret, nec, cum descendisset, quicquam habiturum spei fuisse, nisi alicuius intolerabili libidine et nimis acerbo odio niteretur. Sed ego Atratino, humanissimo atque optimo adulescenti meo necessario, ignosco, qui habet excusationem vel pietatis vel necessitatis vel aetatis. Si voluit accusare, pietati tribuo, si iussus est, necessitati, si speravit aliquid, pueritiae. Ceteris non modo nihil ignoscendum, sed etiam acriter est resistendum.</p>
+          <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="connexion">
+            <p><label for="login">Identifiant</label> <input type="text" id="login" name="login" maxlength="3"></p>
+            <p><label for="password">Mot de passe</label> <input type="password" id="password" name="password" maxlength="10"><i class="far fa-eye"></i></p>
+            <!-- <i class="far fa-eye"></i> -->
+            <p><input type="submit" name="connexion" value="CONNEXION"></p>
+          </form>
+          <?php echo $warning; ?>
+          <!-- TEST -->
+          <pre>
+            dhe RO(2IQOpF9
+            fjl :9Bqr<,|pl
+          </pre>
+          <!-- TEST / FIN -->
         </main>
       </div>
     </div>

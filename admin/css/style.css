@@ -95,10 +95,15 @@ nav a
   color: #FFC107;
 }
 
-nav a:hover
+nav a:hover, nav ul ul a:hover
 {
   color: #FFF;
+  background-color: #603;
 }
+
+nav a:hover {width: 180px;}
+
+nav ul ul a:hover {width: 160px;}
 
 nav a:hover::before
 {
@@ -122,7 +127,6 @@ header, main
 {
   width: 960px;
   margin: 0 20px;
-  /* outline: 1px solid red; */
 }
 
 header h1
@@ -135,6 +139,53 @@ header h1
 /* HEADER FIN*/
 
 /* MAIN */
+/* FORM */
+form p
+{
+  color: #BF0F3D;
+  font-weight: bold;
+}
+
+form p input
+{
+  border: 2px solid #BF0F3D;
+  border-radius: 5px;
+  padding: 5px;
+  color: #BF0F3D;
+}
+
+form p input[type="submit"]
+{
+  background-color: #FFC107;
+  color: #FFC107;
+  background-color: #BF0F3D;
+}
+
+form p input[type="submit"]:hover
+{
+  background-color: #FFC107;
+  color: #BF0F3D;
+  cursor: pointer;
+}
+
+form i[class*="fa-eye"]
+{
+  margin-left: -30px;
+  cursor: pointer;
+}
+
+label
+{
+  display: inline-block;
+  width: 110px;
+}
+
+.warning
+{
+  font-weight: bold;
+  color: red;
+}
+/* FORM / Fin */
 /* MAIN / FIN*/
 
 /* FOOTER */
