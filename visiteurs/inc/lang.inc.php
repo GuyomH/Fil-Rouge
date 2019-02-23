@@ -84,16 +84,16 @@ $interface_zh = [
 $sql_fr = [
   "expo_en_cours"=>"SELECT id_expo, titre_expo, debut_expo, fin_expo
   FROM expositions
-  WHERE NOW() BETWEEN debut_expo AND fin_expo;",
+  WHERE CURDATE() BETWEEN debut_expo AND fin_expo + INTERVAL 1 DAY;",
 
   "expo_a_venir"=>"SELECT titre_expo, debut_expo, fin_expo
   FROM expositions
-  WHERE debut_expo > NOW()
+  WHERE debut_expo > CURDATE()
   LIMIT 4;",
 
   "info_expo"=>"SELECT titre_expo, descriptif_expo, debut_expo, fin_expo
   FROM expositions
-  WHERE NOW() BETWEEN debut_expo AND fin_expo;",
+  WHERE CURDATE() BETWEEN debut_expo AND fin_expo;",
 
   "liste_oeuvre"=>"SELECT EMP.num_emp, O.id_oeuvre,titre_oeuvre, nom_art, prenom_art, nom_col
   FROM expositions AS E
@@ -102,7 +102,7 @@ $sql_fr = [
   INNER JOIN oeuvres AS O ON C.id_oeuvre = O.id_oeuvre
   INNER JOIN artistes AS A ON O.id_art = A.id_art
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
-  WHERE NOW() BETWEEN debut_expo AND fin_expo;"
+  WHERE CURDATE() BETWEEN debut_expo AND fin_expo;"
 ];
 
 $sql_en = [
@@ -110,20 +110,20 @@ $sql_en = [
   FROM expositions AS E
   INNER JOIN expositions_trad AS ET ON E.id_expo = ET.id_expo
   INNER JOIN langues AS L ON ET.id_langue = L.id_langue
-  WHERE (NOW() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'en');",
+  WHERE (CURDATE() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'en');",
 
   "expo_a_venir"=>"SELECT E.id_expo, titre_expo_trad, debut_expo, fin_expo
   FROM expositions AS E
   INNER JOIN expositions_trad AS ET ON E.id_expo = ET.id_expo
   INNER JOIN langues AS L ON ET.id_langue = L.id_langue
-  WHERE (debut_expo > NOW()) AND (code_langue = 'en')
+  WHERE (debut_expo > CURDATE()) AND (code_langue = 'en')
   LIMIT 4;",
 
   "info_expo"=>"SELECT titre_expo_trad, descriptif_expo_trad, debut_expo, fin_expo
   FROM expositions AS E
   INNER JOIN expositions_trad AS ET ON E.id_expo = ET.id_expo
   INNER JOIN langues AS L ON ET.id_langue = L.id_langue
-  WHERE (NOW() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'en');",
+  WHERE (CURDATE() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'en');",
 
   "liste_oeuvre"=>"SELECT EMP.num_emp, O.id_oeuvre,titre_oeuvre_trad, nom_art, prenom_art, nom_col
   FROM expositions AS E
@@ -134,7 +134,7 @@ $sql_en = [
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
   INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
-  WHERE NOW() BETWEEN debut_expo AND fin_expo
+  WHERE CURDATE() BETWEEN debut_expo AND fin_expo
   AND (code_langue = 'en');"
 ];
 
@@ -143,20 +143,20 @@ $sql_zh = [
   FROM expositions AS E
   INNER JOIN expositions_trad AS ET ON E.id_expo = ET.id_expo
   INNER JOIN langues AS L ON ET.id_langue = L.id_langue
-  WHERE (NOW() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'zh');",
+  WHERE (CURDATE() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'zh');",
 
   "expo_a_venir"=>"SELECT E.id_expo, titre_expo_trad, debut_expo, fin_expo
   FROM expositions AS E
   INNER JOIN expositions_trad AS ET ON E.id_expo = ET.id_expo
   INNER JOIN langues AS L ON ET.id_langue = L.id_langue
-  WHERE (debut_expo > NOW()) AND (code_langue = 'zh')
+  WHERE (debut_expo > CURDATE()) AND (code_langue = 'zh')
   LIMIT 4;",
 
   "info_expo"=>"SELECT titre_expo_trad, descriptif_expo_trad, debut_expo, fin_expo
   FROM expositions AS E
   INNER JOIN expositions_trad AS ET ON E.id_expo = ET.id_expo
   INNER JOIN langues AS L ON ET.id_langue = L.id_langue
-  WHERE (NOW() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'zh');",
+  WHERE (CURDATE() BETWEEN debut_expo AND fin_expo) AND (code_langue = 'zh');",
 
   "liste_oeuvre"=>"SELECT EMP.num_emp, O.id_oeuvre,titre_oeuvre_trad, nom_art, prenom_art, nom_col
   FROM expositions AS E
@@ -167,7 +167,7 @@ $sql_zh = [
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
   INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
-  WHERE NOW() BETWEEN debut_expo AND fin_expo
+  WHERE (CURDATE() BETWEEN debut_expo AND fin_expo)
   AND (code_langue = 'zh');"
 ];
 

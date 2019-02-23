@@ -15,13 +15,14 @@ require_once('inc/pdo.inc.php');
 /****************************/
 /* GESTION DE LA NAVIGATION */
 /****************************/
-/* TODO */
+/* TODO (apparence du menu, check variables de sessions) */
 
 /****************************/
 /* CONNEXION COLLABORATEURS */
 /****************************/
 // var init
 $warning = "";
+$fail = "<p class=\"warning\">Identifiants incorrects !</p>";
 
 if(isset($_POST['connexion']))
 {
@@ -33,12 +34,35 @@ if(isset($_POST['connexion']))
     WHERE id_co = '{$_POST['login']}' AND pwd_co = '{$_POST['password']}'
     LIMIT 1;";
 
-    /*echo $sql;*/
+    try
+    {
+      $qry = $db->query($sql);
+      $res = $qry->fetch();
+    }
+    catch (Exception $e)
+    {
+      $res = FALSE;
+      if(stristr($e->getMessage(), "access violation"))
+      {
+        $warning = "<p class=\"warning\">Tentative de violation !</p>";
+      } else {
+        $warning = "<p class=\"warning\">Erreur : " . $e->getMessage() . "</p>";
+      }
+    }
 
-    /*$q = $db->query($sql); TODO try catch ? / fetch ?*/
-
+    if($res != FALSE)
+        {
+          $privi = $res['privilege_co'];
+          $nom = $res['nom_co'];
+          $prenom = $res['prenom_co'];
+          // $acces = json_encode(['id' => $id, 'nom' => $nom, 'role' => $role]);  // Json method
+          // setCookie("acces", $acces, time()+3600);
+          // header('Location: admin.php');
+        } else {
+          if(empty($warning)) { $warning = $fail; }
+        }
   } else {
-    $warning = "<p class=\"warning\">Identifiants incorrects !</p>";
+    $warning = $fail;
   }
 }
 ?>
@@ -107,6 +131,7 @@ if(isset($_POST['connexion']))
           <pre>
             dhe RO(2IQOpF9
             fjl :9Bqr<,|pl
+            dhe ' or 1 --
           </pre>
           <!-- TEST / FIN -->
         </main>
