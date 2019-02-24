@@ -55,9 +55,8 @@ nav>ul>li
   border-top: 1px dashed #FFC107;
 }
 
-nav>ul>li>a
+nav>ul>li>a, .activeMenu
 {
-  /*outline: 1px solid black;*/
   display: inline-block;
   line-height: 50px;
   width: 100%;
@@ -81,7 +80,7 @@ nav ul ul
   font-weight: normal;
 }
 
-nav ul ul li a
+nav ul ul li a, .activeSubMenu
 {
   display: inline-block;
   line-height: 30px;
@@ -95,17 +94,18 @@ nav a
   color: #FFC107;
 }
 
-nav a:hover, nav ul ul a:hover
+/* Gestion Hover & class Active */
+nav a:hover, nav ul ul a:hover, .activeMenu, .activeSubMenu
 {
   color: #FFF;
   background-color: #603;
 }
 
-nav a:hover {width: 180px;}
+nav a:hover, .activeMenu {width: 180px;}
 
-nav ul ul a:hover {width: 160px;}
+nav ul ul a:hover, .activeSubMenu {width: 160px;}
 
-nav a:hover::before
+nav a:hover::before, .activeMenu::before, .activeSubMenu::before
 {
 content: "► ";
 }

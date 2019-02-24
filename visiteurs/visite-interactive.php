@@ -44,6 +44,7 @@ if(empty($expoEnCours))
 {
   // si pas d'expo en cours redirection vers l'index
   header('Location: index.php');
+  exit();
 }
 
 /*****************************************/

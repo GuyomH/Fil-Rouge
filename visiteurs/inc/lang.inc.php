@@ -13,6 +13,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang']))
       break;
   }
   header('Location: ' . $_SERVER['PHP_SELF']);
+  exit();
 }
 
 $interface_fr = [
@@ -84,7 +85,7 @@ $interface_zh = [
 $sql_fr = [
   "expo_en_cours"=>"SELECT id_expo, titre_expo, debut_expo, fin_expo
   FROM expositions
-  WHERE CURDATE() BETWEEN debut_expo AND fin_expo + INTERVAL 1 DAY;",
+  WHERE CURDATE() BETWEEN debut_expo AND fin_expo;",
 
   "expo_a_venir"=>"SELECT titre_expo, debut_expo, fin_expo
   FROM expositions
