@@ -24,3 +24,4 @@
             <h1>► <?php echo $hTitle; ?></h1>
           </header>
         </div>
+        <main>

@@ -146,12 +146,22 @@ form p
   font-weight: bold;
 }
 
-form p input
+form p input, select, .list button
 {
   border: 2px solid #BF0F3D;
   border-radius: 5px;
   padding: 5px;
   color: #BF0F3D;
+}
+
+form p select
+{
+  padding: 4px;
+}
+
+form.single-line p input:last-child
+{
+  margin-left: 0.5rem;
 }
 
 form p input[type="submit"]
@@ -161,7 +171,7 @@ form p input[type="submit"]
   background-color: #BF0F3D;
 }
 
-form p input[type="submit"]:hover
+form p input[type="submit"]:hover, .list button:hover
 {
   background-color: #FFC107;
   color: #BF0F3D;
@@ -180,12 +190,45 @@ label
   width: 110px;
 }
 
+.single-line label
+{
+  width: inherit;
+}
+
 .warning
 {
   font-weight: bold;
   color: red;
 }
 /* FORM / Fin */
+main h2
+{
+  color: #BF0F3D;
+  margin-top: 3rem;
+}
+
+ul.list
+{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list li
+{
+  margin-bottom: 1.5em;
+}
+
+.list li span
+{
+  display: inline-block;
+  padding-top: 0.8rem;
+}
+
+.list li a
+{
+  margin-right: 0.5em;
+}
 /* MAIN / FIN*/
 
 /* FOOTER */

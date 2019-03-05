@@ -84,7 +84,7 @@ switch (basename($_SERVER['PHP_SELF']))
     }
     break;
   case 'liste-expo.php':
-    $title = $hTitle = "LISTE DES EXPOSITIONS";
+    $title = $hTitle = "LISTE DES EXPOSITIONS " . $year;
     break;
   case 'editer-expo.php':
     if(isset($_GET['edit']))

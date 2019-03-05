@@ -12,7 +12,7 @@ require_once('inc/pdo.inc.php');
 /********************/
 /* FONCTIONS UTILES */
 /********************/
-/* TODO */
+require_once('inc/func.inc.php');
 
 /****************************/
 /* GESTION DE LA NAVIGATION */
@@ -67,7 +67,6 @@ if(isset($_POST['connexion']))
 }
 ?>
 <?php require_once('inc/head.inc.php'); ?>
-        <main>
 <?php if(isset($_SESSION['identification'])){ ?>
           <p>Bonjour <strong><?php echo $prenom . " " . $nom; ?></strong>, vous êtes connecté(e) en tant qu'<strong><?php echo $role; ?></strong>.</p>
           <p>Vous pouvez vous déconnecter à tout moment en cliquant sur le bouton ci-dessous :</p>
@@ -90,7 +89,4 @@ if(isset($_POST['connexion']))
           </pre>
           <!-- TEST / FIN -->
 <?php } ?>
-        </main>
-      </div>
-    </div>
 <?php require_once('inc/foot.inc.php'); ?>

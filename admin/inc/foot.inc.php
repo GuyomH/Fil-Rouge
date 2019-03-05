@@ -1,4 +1,6 @@
-
+      </main>
+      </div>
+    </div>
   <footer></footer>
 
 </body>
