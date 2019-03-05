@@ -44,7 +44,6 @@ if(empty($expoEnCours))
 {
   // si pas d'expo en cours redirection vers l'index
   header('Location: index.php');
-  exit();
 }
 
 /*****************************************/
@@ -55,7 +54,7 @@ $q2 = $db->query($sql['liste_oeuvre']);
 // Var init
 $listOeuvre = "";
 $listPuce = "";
-$hr=FALSE;
+$hr = FALSE;
 
 foreach($q2 as $val)
 {
@@ -80,6 +79,7 @@ foreach($q2 as $val)
   {
     $listOeuvre .= "\t\t<hr>\r\n";
   }
+
   $hr = TRUE;
   $listOeuvre .= "\t\t<div class=\"container\">\r\n";
   $listOeuvre .= "\t\t\t<ul id='emp{$empOeuvre}'>\r\n";
@@ -90,9 +90,11 @@ foreach($q2 as $val)
     $listOeuvre .= "\t\t\t\t<li>{$itf['collectif']} : <strong>{$nomCol}</strong></li>\r\n";
   }
 
-  if($nomArt!=""){
+  if($nomArt != "")
+  {
       $listOeuvre .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong></li>\r\n";
   }
+  
   $listOeuvre .= "\t\t\t\t<li><a href='fiche.php?id=$idOeuvre'><button>{$itf['fiche_detail']}</button></a></li>\r\n";
   $listOeuvre .= "\t\t\t\t<li><a href='#plan'>{$itf['retour_plan']}</a></li>\r\n";
   $listOeuvre .= "\t\t\t</ul>\r\n";
