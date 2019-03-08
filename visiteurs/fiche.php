@@ -58,18 +58,31 @@ foreach($q1 as $val)
 
   if($nomCol != "")
   {
-  $OeuvreDetail .= "\t\t\t\t<li>{$itf['collectif']} : <strong>{$nomCol}</strong> <button class=\"toggle\">˅</button></li>\r\n";
-  $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p>{$itf['description_collectif']} : <strong>{$infoCol}</strong></p></li>\r\n";
+    if (($_COOKIE['lang']!= "fr") && empty($infoCol))
+    {
+      $OeuvreDetail .= "\t\t\t\t<li>{$itf['collectif']} : <strong>{$nomCol}</strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p>{$itf['description_collectif']} : <strong>{$itf['no_trad']}</strong></p></li>\r\n";
+    } else {
+      $OeuvreDetail .= "\t\t\t\t<li>{$itf['collectif']} : <strong>{$nomCol}</strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p>{$itf['description_collectif']} : <strong>{$infoCol}</strong></p></li>\r\n";
+    }
   }
 
   if($nomArt != "")
   {
-  $OeuvreDetail .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong> <button class=\"toggle\">˅</button></li>\r\n";
-  $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p>{$itf['description_artiste']} : <strong>{$bioArt}</strong></p></li>\r\n";
+    if (($_COOKIE['lang']!= "fr") && empty($bioArt))
+    {
+      $OeuvreDetail .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p>{$itf['description_artiste']} : <strong>{$itf['no_trad']}</strong></p></li>\r\n";
+    } else {
+      $OeuvreDetail .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p>{$itf['description_artiste']} : <strong>{$bioArt}</strong></p></li>\r\n";
+    }
   }
-  $OeuvreDetail .= "\t\t\t\t<li>{$itf['description_oeuvre']} : <strong>{$descriptifOeuvre}</strong></li>\r\n";
-  $OeuvreDetail .= "\t\t\t</ul>\r\n";
+    $OeuvreDetail .= "\t\t\t\t<li>{$itf['description_oeuvre']} : <strong>{$descriptifOeuvre}</strong></li>\r\n";
+    $OeuvreDetail .= "\t\t\t</ul>\r\n";
 }
+
 
 if(empty($OeuvreDetail))
 {

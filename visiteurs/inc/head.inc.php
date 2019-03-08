@@ -18,9 +18,9 @@
         <div class="container">
           <p id="logo"><a href="index.php" title="Page d'accueil"><img src="img/logo_grand_angle.png" alt="logo Grand Angle"></a></p>
           <ul id="langues" class="container">
-            <li><a href="<?php echo $pageName; ?>.php?lang=fr" title="français"><img src="img/fr.svg" alt="français"></a></li>
-            <li><a href="<?php echo $pageName; ?>.php?lang=en" title="anglais / english"><img src="img/gb.svg" alt="anglais"></a></li>
-            <li><a href="<?php echo $pageName; ?>.php?lang=zh" title="chinois / 中文"><img src="img/cn.svg" alt="chinois"></a></li>
+            <li><a href="<?php echo $pageName; ?>.php?lang=fr<?php echo $param; ?>" title="français"><img src="img/fr.svg" alt="français"></a></li>
+            <li><a href="<?php echo $pageName; ?>.php?lang=en<?php echo $param; ?>" title="anglais / english"><img src="img/gb.svg" alt="anglais"></a></li>
+            <li><a href="<?php echo $pageName; ?>.php?lang=zh<?php echo $param; ?>" title="chinois / 中文"><img src="img/cn.svg" alt="chinois"></a></li>
           </ul>
         </div>
         <hr>

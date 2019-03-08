@@ -12,7 +12,7 @@ if(isset($_GET['lang']) && !empty($_GET['lang']))
       setCookie("lang", "fr", time()+3600);
       break;
   }
-  header('Location: ' . $_SERVER['PHP_SELF']);
+  header('Location: ' . $_SERVER['PHP_SELF'].$param2);
 }
 
 $interface_fr = [
@@ -40,7 +40,8 @@ $interface_fr = [
   "description_artiste"=>"Description de l'artiste",
   "media"=>"Média",
   "oeuvre"=>"Oeuvre",
-  "retour_visite"=>"Retour à la visite intéractive"
+  "retour_visite"=>"Retour à la visite intéractive",
+  "no_trad"=>"Pas de traduction pour le moment"
 ];
 
 $interface_en = [
@@ -68,7 +69,8 @@ $interface_en = [
   "description_artiste"=>"Description of the artist",
   "media"=>"media",
   "oeuvre"=>"Artwork",
-  "retour_visite"=>"Return to the interactive visit"
+  "retour_visite"=>"Return to the interactive visit",
+  "no_trad"=>"No translation available"
 ];
 
 $interface_zh = [
@@ -96,7 +98,8 @@ $interface_zh = [
   "description_artiste"=>"艺术家的描述",
   "media"=>"媒体",
   "oeuvre"=>"出",
-  "retour_visite"=>"回到互动访问"
+  "retour_visite"=>"回到互动访问",
+  "no_trad"=>"还没有翻译"
 ];
 
 /* récupération id */
@@ -179,19 +182,31 @@ $sql_en = [
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
   AND (code_langue = 'en');",
 
-  "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, nom_col, info_col_trad, bio_art_trad
+  "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
   FROM oeuvres AS O
-  INNER JOIN artistes AS A ON A.id_art = O.id_art
-  INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
-  INNER JOIN collectifs_trad AS COLT ON COLT.id_col = COL.id_col
-  INNER JOIN artistes_trad AS AT ON AT.id_art = A.id_art
-  INNER JOIN oeuvres_trad AS OT ON OT.id_oeuvre = O.id_oeuvre
-  INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
+  INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
+  INNER JOIN langues AS L ON OT.id_langue = L.id_langue
+  INNER JOIN artistes AS A ON O.id_art = A.id_art
+  INNER JOIN artistes_trad AS AT ON A.id_art = AT.id_art
+  INNER JOIN langues AS L2 ON AT.id_langue = L2.id_langue
+  INNER JOIN collectifs AS C ON A.id_col = c.id_col
+  INNER JOIN collectifs_trad AS CT ON C.id_col = CT.id_col
+  INNER JOIN langues AS L3 ON CT.id_langue = L3.id_langue
   INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
   INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
-  WHERE O.id_oeuvre=$id
-  AND CURDATE() BETWEEN debut_expo AND fin_expo
-  AND (code_langue = 'en');"
+  WHERE L.code_langue = 'en'
+  AND L2.code_langue = 'en'
+  AND L3.code_langue = 'en'
+  AND O.id_oeuvre = $id
+  AND CURDATE() BETWEEN debut_expo AND fin_expo;",
+
+  "media"=>"SELECT nom_media, type_media, E.id_expo
+  FROM medias AS M
+  INNER JOIN accompagner AS AC ON AC.id_media = M.id_media
+  INNER JOIN oeuvres AS O ON AC.id_oeuvre = O.id_oeuvre
+  INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
+  INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
+  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo;"
 ];
 
 $sql_zh = [
@@ -224,7 +239,33 @@ $sql_zh = [
   INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
-  AND (code_langue = 'zh');"
+  AND (code_langue = 'zh');",
+
+  "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
+  FROM oeuvres AS O
+  INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
+  INNER JOIN langues AS L ON OT.id_langue = L.id_langue
+  INNER JOIN artistes AS A ON O.id_art = A.id_art
+  INNER JOIN artistes_trad AS AT ON A.id_art = AT.id_art
+  INNER JOIN langues AS L2 ON AT.id_langue = L2.id_langue
+  INNER JOIN collectifs AS C ON A.id_col = c.id_col
+  INNER JOIN collectifs_trad AS CT ON C.id_col = CT.id_col
+  INNER JOIN langues AS L3 ON CT.id_langue = L3.id_langue
+  INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
+  INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
+  WHERE L.code_langue = 'zh'
+  AND L2.code_langue = 'zh'
+  AND L3.code_langue = 'zh'
+  AND O.id_oeuvre = $id
+  AND CURDATE() BETWEEN debut_expo AND fin_expo;",
+
+  "media"=>"SELECT nom_media, type_media, E.id_expo
+  FROM medias AS M
+  INNER JOIN accompagner AS AC ON AC.id_media = M.id_media
+  INNER JOIN oeuvres AS O ON AC.id_oeuvre = O.id_oeuvre
+  INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
+  INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
+  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo;"
 ];
 
 if(isset($_COOKIE['lang']))
