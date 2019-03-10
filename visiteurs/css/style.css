@@ -79,7 +79,6 @@ header
 #logo
 {
   margin: 0;
-  padding: 1.5rem 0;
   text-align: center;
 }
 
@@ -87,13 +86,13 @@ header
 {
   width: 200px;
   height: auto;
+  margin: 1.5rem;
 }
 
-#langues img
+#langues img, #langues li
 {
   width: 2.4rem;
-  height: auto;
-
+  height: 2.4rem;
 }
 
 #langues img:hover
