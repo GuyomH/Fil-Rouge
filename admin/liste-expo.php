@@ -45,7 +45,7 @@ FROM expositions;";
 $qry0 = $db->query($sql0);
 foreach ($qry0 as $an)
 {
-  if($an['an_expo'] == $year) { $selected = " selected"; }
+  if($an['an_expo'] == $year) { $selected = " selected"; } else { $selected = ""; }
   $yearList .= "\t\t\t\t<option value=\"{$an['an_expo']}\"{$selected}>{$an['an_expo']}</option>\r\n";
 }
 

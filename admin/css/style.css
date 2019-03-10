@@ -20,7 +20,7 @@ img
 #layout
 {
   display: flex;
-  height: 100%;
+  min-height: 100%;
 }
 /* GENERAL / FIN */
 
@@ -146,7 +146,7 @@ form p
   font-weight: bold;
 }
 
-form p input, select, .list button
+form p input, select, .list button, textarea
 {
   border: 2px solid #BF0F3D;
   border-radius: 5px;
@@ -184,16 +184,25 @@ form i[class*="fa-eye"]
   cursor: pointer;
 }
 
-label
+.wide input[type="text"], .wide textarea
 {
-  display: inline-block;
-  width: 110px;
+  width: 250px;
 }
 
-.single-line label
+.wide textarea
+{
+  height: 125px;
+}
+
+label
+{
+  display: block;
+}
+
+/* .single-line label
 {
   width: inherit;
-}
+} */
 
 .warning
 {
@@ -201,10 +210,11 @@ label
   color: red;
 }
 /* FORM / Fin */
+
 main h2
 {
   color: #BF0F3D;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 ul.list

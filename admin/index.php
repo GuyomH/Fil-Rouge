@@ -75,8 +75,8 @@ if(isset($_POST['connexion']))
           </form>
 <?php } else { ?>
           <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <p><label for="login">Identifiant</label> <input type="text" id="login" name="login" maxlength="3" pattern="[A-Za-z]{3}" title="3 caractères alphabétiques"></p>
-            <p><label for="password">Mot de passe</label> <input type="password" id="password" name="password" maxlength="10" pattern=".{10}" title="séquence de 10 caractères"><i class="far fa-eye"></i></p><!-- <i class="far fa-eye"></i> -->
+            <p><label for="login">Identifiant :</label> <input type="text" id="login" name="login" maxlength="3" pattern="[A-Za-z]{3}" title="3 caractères alphabétiques"></p>
+            <p><label for="password">Mot de passe :</label> <input type="password" id="password" name="password" maxlength="10" pattern=".{10}" title="séquence de 10 caractères"><i class="far fa-eye"></i></p><!-- <i class="far fa-eye"></i> -->
             <p><input type="submit" name="connexion" value="CONNEXION"></p>
           </form>
           <?php echo $warning; ?>
