@@ -25,12 +25,15 @@ require_once('inc/nav.inc.php');
 // var init
 $warning = "";
 
-// Étape 0
+
+// ÉTAPE 0
 // TODO
 // Si mode édition : récupération et chargement des valeurs dans les champs
 // Voir le système de transmission de l'id de l'expo en mode édition/création
+// test
+$lastID = 6;
 
-// Étape 1
+// ÉTAPE 1
 if(isset($_POST['expo1']))
 {
   // Traductions (non obligatoire)
@@ -94,6 +97,61 @@ if(isset($_POST['expo1']))
     $warning = "<p class=\"warning\">Les champs obligatoires ne sont pas correctement remplis !</p>";
   }
 }
+
+// ÉTAPE 2
+$empTab = "";
+$tooBig = "";
+$sql = "SELECT * FROM emplacements;";
+$qry = $db->query($sql);
+foreach ($qry as $val)
+{
+  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden>Choisir</option>\r\n";
+
+    $sql2 = "SELECT num_emp, longueur_emp, largeur_emp, hauteur_emp
+    FROM emplacements
+    WHERE num_emp = '{$val['num_emp']}';";
+    $qry2 = $db->query($sql2);
+    $dimension = $qry2->fetch(); // 1 résultat attendu
+
+    $sql3 = "SELECT titre_oeuvre, O.id_oeuvre
+    FROM oeuvres AS O
+    INNER JOIN avoir AS AV ON O.id_oeuvre = AV.id_oeuvre
+    INNER JOIN types AS T ON AV.id_type = T.id_type
+    INNER JOIN deux_dimensions AS DD ON AV.id_pic = DD.id_pic
+    INNER JOIN trois_dimensions AS DDD ON AV.id_tri = DDD.id_tri
+    WHERE longueur_tri <= {$dimension['longueur_emp']} AND largeur_tri <= {$dimension['largeur_emp']} AND hauteur_tri <= {$dimension['hauteur_emp']}
+    AND longueur_pic <= {$dimension['longueur_emp']} AND hauteur_pic <= {$dimension['hauteur_emp']}
+    ORDER BY titre_oeuvre;";
+    $qry3 = $db->query($sql3);
+    foreach ($qry3 as $ovr) {
+      $empTab .= "\t\t\t\t\t<option id=\"{$ovr['id_oeuvre']}\">{$ovr['titre_oeuvre']}</option>\r\n";
+    }
+
+    $sql4 = "SELECT titre_oeuvre, O.id_oeuvre
+    FROM oeuvres AS O
+    INNER JOIN avoir AS AV ON O.id_oeuvre = AV.id_oeuvre
+    INNER JOIN types AS T ON AV.id_type = T.id_type
+    INNER JOIN deux_dimensions AS DD ON AV.id_pic = DD.id_pic
+    INNER JOIN trois_dimensions AS DDD ON AV.id_tri = DDD.id_tri
+    WHERE (cat_type <> '0D')
+    AND (longueur_tri > {$dimension['longueur_emp']} OR largeur_tri > {$dimension['largeur_emp']} OR hauteur_tri > {$dimension['hauteur_emp']})
+    OR (longueur_pic > {$dimension['longueur_emp']} OR hauteur_pic > {$dimension['hauteur_emp']})
+    ORDER BY titre_oeuvre;";
+    $qry4 = $db->query($sql4);
+    foreach ($qry4 as $ovr2) {
+      $tooBig .= "\t\t\t\t\t\t<option id=\"{$ovr2['id_oeuvre']}\" disabled>{$ovr2['titre_oeuvre']}</option>\r\n";
+    }
+
+    if(!empty($tooBig))
+    {
+      $empTab .= "\t\t\t\t\t<optgroup label=\"Ne loge pas dans l'emplacement\">";
+      $empTab .= $tooBig;
+      $empTab .= "\t\t\t\t\t</optgroup>";
+      $tooBig = ""; // Reset de la variable
+    }
+
+  $empTab .= "\t\t\t\t</select></td><td><input type=\"date\" name=\"date{$val['num_emp']}\"></td><td></tr>\r\n";
+}
 ?>
 <?php require_once('inc/head.inc.php'); ?>
 
@@ -122,12 +180,15 @@ if(isset($_POST['expo1']))
 <?php } else { ?>
           <!-- étape 2 -->
           <h2>Étape 2</h2>
-          <!--
-          <table>
-            <tr><th>Emplacement</th><th>Titre</th><th>Date de livraison</th><th colspan="2">&nbsp;</th></tr>
-            <tr><td>1-01</td><td><input type="text" name="titre-1-01" maxlength="500"></td><td><input type="date" name="date-1-01"></td><td><input type="submit" name="emp1-01" value="Enregistrer"><td><td><input type="submit" name="dele1-01" value="Supprimer"></td></tr>
-          </table>
-          -->
+
+          <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <table id="expo-emp">
+              <tr><th>Emplacement</th><th>Titre de l'oeuvre</th><th>Date de livraison</th></tr>
+<?php echo $empTab; ?>
+            </table>
+            <p><input type="submit" name="expo2" id="expo2" value="Valider étape 2"></p>
+          </form>
+
 <?php } ?>
 
 <?php require_once('inc/foot.inc.php'); ?>

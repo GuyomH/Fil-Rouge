@@ -209,6 +209,29 @@ label
   font-weight: bold;
   color: red;
 }
+
+table#expo-emp
+{
+  background-color: #f0f0f0;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+table#expo-emp input[type="text"]
+{
+  width: 20rem;
+}
+
+table#expo-emp th
+{
+  color: #BF0F3D;
+}
+
+table#expo-emp td
+{
+  text-align: center;
+  padding: 0.5rem;
+}
 /* FORM / Fin */
 
 main h2

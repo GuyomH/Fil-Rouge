@@ -188,6 +188,30 @@ GROUP BY O.id_oeuvre
 HAVING COUNT(id_expo) > 1
 ORDER BY sum(click_oeuvre) DESC;
 
+-- Sélectionner les dimensions d'une oeuvre
+SELECT titre_oeuvre, O.id_oeuvre, T.cat_type, DD.longueur_pic, DD.hauteur_pic, DDD.longueur_tri, DDD.largeur_tri, DDD.hauteur_tri
+FROM oeuvres AS O
+INNER JOIN avoir AS AV ON O.id_oeuvre = AV.id_oeuvre
+INNER JOIN types AS T ON AV.id_type = T.id_type
+INNER JOIN deux_dimensions AS DD ON AV.id_pic = DD.id_pic
+INNER JOIN trois_dimensions AS DDD ON AV.id_tri = DDD.id_tri;
+
+-- Sélectionner les dimensions d'un emplacement
+SELECT num_emp, longueur_emp, largeur_emp, hauteur_emp
+FROM emplacements
+WHERE num_emp = '1-01';
+
+-- Liste des oeuvres qui rentrent dans un emplacement spécifique (valeur en dur)
+SELECT titre_oeuvre, O.id_oeuvre, T.cat_type, DD.longueur_pic, DD.hauteur_pic, DDD.longueur_tri, DDD.largeur_tri, DDD.hauteur_tri
+FROM oeuvres AS O
+INNER JOIN avoir AS AV ON O.id_oeuvre = AV.id_oeuvre
+INNER JOIN types AS T ON AV.id_type = T.id_type
+INNER JOIN deux_dimensions AS DD ON AV.id_pic = DD.id_pic
+INNER JOIN trois_dimensions AS DDD ON AV.id_tri = DDD.id_tri
+WHERE longueur_tri <= 200 AND largeur_tri <= 250 AND hauteur_tri <= 300
+AND longueur_pic <= 200 AND hauteur_pic <= 300
+ORDER BY id_oeuvre;
+
 -- Sélectionner les oeuvres qui ne rentrent pas dans l'emplacement choisi
 SELECT titre_oeuvre, titre_expo
 FROM oeuvres AS O
@@ -199,8 +223,8 @@ INNER JOIN types AS T ON AV.id_type = T.id_type
 INNER JOIN deux_dimensions AS DD ON AV.id_pic = DD.id_pic
 INNER JOIN trois_dimensions AS DDD ON AV.id_tri = DDD.id_tri
 WHERE (cat_type <> '0D')
-AND (longueur_tri > longueur_emp OR largeur_tri > largeur_emp OR hauteur_tri > hauteur_emp)
-OR (longueur_pic > longueur_emp OR hauteur_pic > hauteur_emp);
+AND (longueur_tri > 200 OR largeur_tri > 250 OR hauteur_tri > 300)
+OR (longueur_pic > 200 OR hauteur_pic > 300);
 
 -- TODO --
 -- Supprimer une expo
