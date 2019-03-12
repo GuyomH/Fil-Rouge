@@ -52,37 +52,45 @@ foreach($q1 as $val)
     $idArtiste = $val['id_art'];
     $idCollectif = $val['id_col'];
   }
-
-  $OeuvreDetail .= "\t\t<h3>{$titreOeuvre}</h3>\r\n";
+  $OeuvreDetail .= "\t\t<div class='fiche'>\r\n";
+  $OeuvreDetail .= "\t\t<h1>{$titreOeuvre}</h1>\r\n";
   $OeuvreDetail .= "\t\t\t<ul>\r\n";
+  $OeuvreDetail .= "\t\t\t\t<li><strong>{$descriptifOeuvre}</strong></li>\r\n";
 
-  if($nomCol != "")
+  if(($nomCol != "") && ($nomArt != ""))
   {
-    if (($_COOKIE['lang']!= "fr") && empty($infoCol))
+    if (($_COOKIE['lang']!= "fr") && empty($infoCol) && empty($bioArt))
     {
-      $OeuvreDetail .= "\t\t\t\t<li>{$itf['collectif']} : <strong>{$nomCol}</strong> <button class=\"toggle\">˅</button></li>\r\n";
-      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p>{$itf['description_collectif']} : <strong>{$itf['no_trad']}</strong></p></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$nomCol} / {$prenomArt} {$nomArt}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p><strong>{$itf['no_trad']}</strong></p><img src='../artistes/{$idArtiste}.jpg'/><p><strong>{$itf['no_trad']}</strong></p></li>\r\n";
     } else {
-      $OeuvreDetail .= "\t\t\t\t<li>{$itf['collectif']} : <strong>{$nomCol}</strong> <button class=\"toggle\">˅</button></li>\r\n";
-      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p>{$itf['description_collectif']} : <strong>{$infoCol}</strong></p></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$nomCol} / {$prenomArt} {$nomArt}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p><strong>{$infoCol}</strong></p><img src='../artistes/{$idArtiste}.jpg'/><p><strong>{$bioArt}</strong></p></li>\r\n";
     }
-  }
 
-  if($nomArt != "")
+  }elseif (($nomCol == "") && ($nomArt != ""))
   {
     if (($_COOKIE['lang']!= "fr") && empty($bioArt))
     {
-      $OeuvreDetail .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong> <button class=\"toggle\">˅</button></li>\r\n";
-      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p>{$itf['description_artiste']} : <strong>{$itf['no_trad']}</strong></p></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$prenomArt} {$nomArt}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p><strong>{$itf['no_trad']}</strong></p></li>\r\n";
     } else {
-      $OeuvreDetail .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong> <button class=\"toggle\">˅</button></li>\r\n";
-      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p>{$itf['description_artiste']} : <strong>{$bioArt}</strong></p></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$prenomArt} {$nomArt}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p><strong>{$bioArt}</strong></p></li>\r\n";
+    }
+  }else {
+    if (($_COOKIE['lang']!= "fr") && empty($nomCol))
+    {
+      $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$nomCol}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p><strong>{$itf['no_trad']}</strong></p></li>\r\n";
+    } else {
+      $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$nomCol}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
+      $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p><strong>{$infoCol}</strong></p></li>\r\n";
     }
   }
-    $OeuvreDetail .= "\t\t\t\t<li>{$itf['description_oeuvre']} : <strong>{$descriptifOeuvre}</strong></li>\r\n";
-    $OeuvreDetail .= "\t\t\t</ul>\r\n";
+  $OeuvreDetail .= "\t\t\t</ul>\r\n";
 }
-
+$OeuvreDetail .= "\t\t</div>\r\n";
 
 if(empty($OeuvreDetail))
 {
@@ -123,9 +131,9 @@ require_once('inc/head.inc.php');
 
     <main id="fiche">
       <div class="container margin-bottom">
-        <h1><?php echo $itf['oeuvre']; ?></h1>
+        <!-- <h1><?php echo $itf['oeuvre']; ?></h1> -->
         <?php echo $OeuvreDetail; ?>
-        <h2><?php echo $itf['media']; ?> <button class="toggle">˅</button></h2>
+        <h2><?php echo $itf['media']; ?> <br><button class="toggle">˅</button></h2>
         <div class="content"><?php echo $listMedia; ?></div>
         <a href='visite-interactive.php' title='visite_interactive'><button><?php echo $itf['retour_visite'];?></button></a>
       </div>

@@ -227,6 +227,10 @@ main li
   display: none;
 }
 
+.fiche li {
+  color: black;
+}
+
 /* MAIN / FIN */
 
 /* FOOTER */
