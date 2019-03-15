@@ -105,7 +105,7 @@ $sql = "SELECT * FROM emplacements;";
 $qry = $db->query($sql);
 foreach ($qry as $val)
 {
-  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden>Choisir</option>\r\n";
+  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden>Choisir</option>\r\n\t\t\t\t\t<option id=\"0\">-</option>\r\n";
 
     $sql2 = "SELECT num_emp, longueur_emp, largeur_emp, hauteur_emp
     FROM emplacements
@@ -144,9 +144,9 @@ foreach ($qry as $val)
 
     if(!empty($tooBig))
     {
-      $empTab .= "\t\t\t\t\t<optgroup label=\"Ne loge pas dans l'emplacement\">";
+      $empTab .= "\t\t\t\t\t<optgroup label=\"Ne loge pas dans l'emplacement\">\r\n";
       $empTab .= $tooBig;
-      $empTab .= "\t\t\t\t\t</optgroup>";
+      $empTab .= "\t\t\t\t\t</optgroup>\r\n";
       $tooBig = ""; // Reset de la variable
     }
 
