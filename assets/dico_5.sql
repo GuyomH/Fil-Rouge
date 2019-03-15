@@ -226,5 +226,17 @@ WHERE (cat_type <> '0D')
 AND (longueur_tri > 200 OR largeur_tri > 250 OR hauteur_tri > 300)
 OR (longueur_pic > 200 OR hauteur_pic > 300);
 
+-- Insérer les oeuvres dans la base de données (sans le jeu de piste)
+INSERT INTO composer (livraison_oeuvre, id_oeuvre, id_expo, num_emp)
+VALUES ('2019-01-01', 1, 1, '1-01');
+
+-- Séléctionner le programme d'une expo
+SELECT EMP.num_emp, O.titre_oeuvre
+FROM oeuvres AS O
+INNER JOIN composer AS C ON O.id_oeuvre = C.id_oeuvre
+INNER JOIN expositions AS E ON C.id_expo = E.id_expo
+INNER JOIN emplacements AS EMP ON C.num_emp = EMP.num_emp
+WHERE E.id_expo = 6;
+
 -- TODO --
 -- Supprimer une expo

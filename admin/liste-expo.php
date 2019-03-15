@@ -113,15 +113,16 @@ if($year == date('Y'))
 
 } else if($year > date('Y')) {
   // Expos années à venir
+  $futurYearExpoVal = "";
   $sql4 = "SELECT titre_expo, debut_expo, fin_expo, id_expo
   FROM expositions
-  WHERE YEAR(fin_expo) = YEAR(CURDATE()) + 1
-  OR YEAR(debut_expo) = YEAR(CURDATE()) + 1
+  WHERE YEAR(fin_expo) = $year
+  OR YEAR(debut_expo) = $year
   ORDER BY debut_expo;";
   $qry4 = $db->query($sql4);
   foreach ($qry4 as $val4)
   {
-    $futurYearExpoVal = "\t\t\t\t\t<li><strong>{$val4['titre_expo']}</strong><br><small>Du " . frenchDate($val4['debut_expo']) . " au " . frenchDate($val4['fin_expo']) . "</small><br><span><a href=\"editer-expo.php?expo={$val4['id_expo']}\" title=\"Éditer\"><button>Éditer</button></a><a href=\"fiche-detail.php?expo={$val4['id_expo']}\" title=\"Programme\"><button>Programme</button></a><span></li>\r\n";
+    $futurYearExpoVal .= "\t\t\t\t\t<li><strong>{$val4['titre_expo']}</strong><br><small>Du " . frenchDate($val4['debut_expo']) . " au " . frenchDate($val4['fin_expo']) . "</small><br><span><a href=\"editer-expo.php?expo={$val4['id_expo']}\" title=\"Éditer\"><button>Éditer</button></a><a href=\"fiche-detail.php?expo={$val4['id_expo']}\" title=\"Programme\"><button>Programme</button></a><span></li>\r\n";
   }
 
   if(!empty($futurYearExpoVal))
@@ -134,8 +135,8 @@ if($year == date('Y'))
   // Expos années passées
   $sql4 = "SELECT titre_expo, debut_expo, fin_expo, id_expo
   FROM expositions
-  WHERE YEAR(debut_expo) = YEAR(CURDATE()) - 1
-  OR YEAR(fin_expo) = YEAR(CURDATE()) - 1
+  WHERE YEAR(debut_expo) = $year
+  OR YEAR(fin_expo) = $year
   ORDER BY debut_expo;";
   $qry4 = $db->query($sql4);
   foreach ($qry4 as $val4)
