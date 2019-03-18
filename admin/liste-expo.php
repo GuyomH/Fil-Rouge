@@ -18,7 +18,7 @@ require_once('inc/func.inc.php');
 /* GESTION DE LA NAVIGATION */
 /****************************/
 // Année expo
-if(isset($_GET['an']) && strlen($_GET['an']) == 4)
+if(isset($_GET['an']) && strlen($_GET['an']) == 4) // marche pour 'TOUT' ou 2020
 {
   $year = $_GET['an'];
 } else {
@@ -31,12 +31,13 @@ require_once('inc/nav.inc.php');
 /* LISTE DES EXPOSITIONS */
 /*************************/
 // Var init
-$yearList = "";
+$yearList = "\t\t\t\t<option value=\"tout\">TOUT</option>\r\n";
 $currentExpo = "";
 $futurExpo = "";
 $pastExpo = "";
 $pastYearExpo = "";
 $futurYearExpo = "";
+$all = "";
 $selected = "";
 
 // Gestion année expo
@@ -49,8 +50,27 @@ foreach ($qry0 as $an)
   $yearList .= "\t\t\t\t<option value=\"{$an['an_expo']}\"{$selected}>{$an['an_expo']}</option>\r\n";
 }
 
-if($year == date('Y'))
+// Traitement de la sélection
+if($year == "tout")
 {
+  // Listing complet
+  $allExpoVal = "";
+  $sql5 = "SELECT titre_expo, debut_expo, fin_expo, id_expo
+  FROM expositions
+  ORDER BY debut_expo;";
+  $qry5 = $db->query($sql5);
+  foreach ($qry5 as $val5)
+  {
+    $allExpoVal .= "\t\t\t\t\t<li><strong>{$val5['titre_expo']}</strong><br><small>Du " . frenchDate($val5['debut_expo']) . " au " . frenchDate($val5['fin_expo']) . "</small><br><span><a href=\"editer-expo.php?expo={$val5['id_expo']}\" title=\"Éditer\"><button>Éditer</button></a><a href=\"fiche-detail.php?expo={$val5['id_expo']}\" title=\"Programme\"><button>Programme</button></a><span></li>\r\n";
+  }
+
+  if(!empty($allExpoVal))
+  {
+    $all .= "\t\t\t\t<ul class=\"list\">\r\n";
+    $all .= $allExpoVal;
+    $all .= "\t\t\t\t</ul>\r\n";
+  }
+} else if($year == date('Y')) {
   // Expo en cours
   $sql1 = "SELECT titre_expo, debut_expo, fin_expo, id_expo
   FROM expositions
@@ -100,7 +120,7 @@ if($year == date('Y'))
   $qry3 = $db->query($sql3);
   foreach ($qry3 as $val3)
   {
-    $pastExpoVal .= "\t\t\t\t\t<li><strong>{$val3['titre_expo']}</strong><br><small>Du " . frenchDate($val3['debut_expo']) . " au " . frenchDate($val3['fin_expo']) . "</small><br><span><a href=\"editer-expo.php?expo={$val1['id_expo']}\" title=\"Éditer\"><button>Éditer</button></a><a href=\"fiche-detail.php?expo={$val3['id_expo']}\" title=\"Programme\"><button>Programme</button></a><span></li>\r\n";
+    $pastExpoVal .= "\t\t\t\t\t<li><strong>{$val3['titre_expo']}</strong><br><small>Du " . frenchDate($val3['debut_expo']) . " au " . frenchDate($val3['fin_expo']) . "</small><br><span><a href=\"editer-expo.php?expo={$val3['id_expo']}\" title=\"Éditer\"><button>Éditer</button></a><a href=\"fiche-detail.php?expo={$val3['id_expo']}\" title=\"Programme\"><button>Programme</button></a><span></li>\r\n";
   }
 
   if(!empty($pastExpoVal))
@@ -166,4 +186,5 @@ if($year == date('Y'))
 <?php echo $pastExpo; ?>
 <?php echo $pastYearExpo; ?>
 <?php echo $futurYearExpo; ?>
+<?php echo $all; ?>
 <?php require_once('inc/foot.inc.php'); ?>

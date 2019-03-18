@@ -53,6 +53,7 @@ nav>ul>li
 {
   color: #FFC107;
   border-top: 1px dashed #FFC107;
+  overflow: hidden; /* Supprime le tremblement au hover */
 }
 
 nav>ul>li>a, .activeMenu
@@ -146,7 +147,7 @@ form p
   font-weight: bold;
 }
 
-form p input, select, .list button, textarea
+input, select, .list button, textarea
 {
   border: 2px solid #BF0F3D;
   border-radius: 5px;
@@ -157,6 +158,11 @@ form p input, select, .list button, textarea
 form p select
 {
   padding: 4px;
+}
+
+form td select
+{
+  padding: 7px;
 }
 
 form.single-line p input:last-child
@@ -234,10 +240,15 @@ table#expo-emp td
 }
 /* FORM / Fin */
 
-main h2
+main h2, main h3
 {
   color: #BF0F3D;
-  margin-top: 1rem;
+  /*margin-top: 1rem;*/
+}
+
+main h3
+{
+  font-style: italic;
 }
 
 ul.list
