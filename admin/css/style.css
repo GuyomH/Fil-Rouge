@@ -235,6 +235,29 @@ table#expo-emp td
 }
 /* FORM / Fin */
 
+table.list-collab , .list-collab th , .list-collab td
+{
+  text-align: center;
+  padding: 0.6rem;
+
+}
+
+.list-collab tr:nth-child(even)
+{
+  background-color: #f0f0f0;
+}
+
+table.list-collab
+{
+  border-collapse: collapse;
+
+}
+
+.list-collab th
+{
+  color: #BF0F3D;
+}
+
 main h2, main h3
 {
   color: #BF0F3D;
