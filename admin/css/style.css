@@ -205,11 +205,6 @@ label
   display: block;
 }
 
-/* .single-line label
-{
-  width: inherit;
-} */
-
 .warning
 {
   font-weight: bold;
@@ -251,7 +246,7 @@ main h3
   font-style: italic;
 }
 
-ul.list
+ul.list, ul#prog
 {
   list-style-type: none;
   margin: 0;
@@ -272,6 +267,22 @@ ul.list
 .list li a
 {
   margin-right: 0.5em;
+}
+
+#prog li
+{
+  border-bottom: 2px dashed #BF0F3D;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  font-weight: bold;
+  position: relative;
+}
+
+#prog li img
+{
+  width: 150px;
+  height: auto;
+  display: block;
 }
 /* MAIN / FIN*/
 

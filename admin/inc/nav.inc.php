@@ -115,6 +115,9 @@ switch (basename($_SERVER['PHP_SELF']))
   case 'statistique.php':
     $title = $hTitle = "STATISTIQUES";
     break;
+  case 'fiche-detail.php':
+    $title = $hTitle = "PROGRAMME";
+    break;
   default:
     break;
 }
