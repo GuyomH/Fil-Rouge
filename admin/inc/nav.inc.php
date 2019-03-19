@@ -107,7 +107,13 @@ switch (basename($_SERVER['PHP_SELF']))
     $title = $hTitle = "LISTE DES COLLABORATEURS";
     break;
   case 'editer-collab.php':
-    $title = $hTitle = "AJOUTER UN COLLABORATEUR";
+    // $title = $hTitle = "AJOUTER UN COLLABORATEUR";
+    if(isset($_GET['collab']) && !empty($_GET['collab']))
+    {
+      $title = $hTitle = "ÉDITER UN COLLABORATEUR";
+    } else {
+      $title = $hTitle = "AJOUTER UN COLLABORATEUR";
+    }
     break;
   case 'traduction.php':
     $title = $hTitle = "CONTENUS NON TRADUITS";
