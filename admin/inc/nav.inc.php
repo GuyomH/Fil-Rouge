@@ -22,7 +22,7 @@ $menuArray = // Structuration du menu sous forme de tableau
     ['Ajouter', 'editer-collab.php', 'Créer ou éditer un collaborateur']
   ],
 
-  ['TRADUCTIONS', 'traduction.php', 'Trouver les contenus non traduits'],
+  /*['TRADUCTIONS', 'traduction.php', 'Trouver les contenus non traduits'],*/
 
   ['STATISTIQUES', 'statistique.php', 'Statistiques de consultation de la partie publique du site']
 ];
@@ -101,7 +101,12 @@ switch (basename($_SERVER['PHP_SELF']))
     $title = $hTitle = "ÉDITER / CRÉER UN ARTISTE";
     break;
   case 'editer-collectif.php':
-    $title = $hTitle = "ÉDITER / CRÉER UNE COLLECTIF";
+    if(isset($_SESSION['loadedColl']) || (isset($_POST['select-coll']) && ($_POST['select-coll'] > 0)))
+    {
+      $title = $hTitle = "ÉDITER UN COLLECTIF";
+    } else {
+      $title = $hTitle = "CRÉER UN COLLECTIF";
+    }
     break;
   case 'liste-collab.php':
     $title = $hTitle = "LISTE DES COLLABORATEURS";

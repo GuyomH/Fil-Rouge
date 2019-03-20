@@ -30,7 +30,6 @@ if(isset($_GET['expo']) && !empty(intval($_GET['expo'])))
 if(isset($_SESSION['editExpo']))
 {
   require_once('inc/edit-expo.inc.php');
-  //require_once('inc/create-expo.inc.php');
 } else {
   require_once('inc/create-expo.inc.php');
 }
