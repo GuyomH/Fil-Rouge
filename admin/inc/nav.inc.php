@@ -101,7 +101,7 @@ switch (basename($_SERVER['PHP_SELF']))
     $title = $hTitle = "ÉDITER / CRÉER UN ARTISTE";
     break;
   case 'editer-collectif.php':
-    $title = $hTitle = "ÉDITER / CRÉER UNE COLLECTIF";
+    $title = $hTitle = "ÉDITER / CRÉER UN COLLECTIF";
     break;
   case 'liste-collab.php':
     $title = $hTitle = "LISTE DES COLLABORATEURS";
