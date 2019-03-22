@@ -51,7 +51,7 @@ $_SESSION['fin_org'] = $finVal;
 $qryTrad = $db->query($sqlTrad);
 foreach ($qryTrad as $trad)
 {
-  // On reconsitue dynamiquement le nom des variables
+  // On reconstitue dynamiquement le nom des variables
   $varLang = ucFirst($trad['code_langue']); // En ou Zh
   ${'titreVal'.$varLang} = $trad['titre_expo_trad'];
   ${'descVal'.$varLang} = $trad['descriptif_expo_trad'];
@@ -327,7 +327,7 @@ if(isset($_POST['expo2']))
   $sql6 = substr($sql6, 0, -3); // supprime ",\r\n" en fin de chaîne
   $sql6 .= " ON DUPLICATE KEY UPDATE id_oeuvre = values(id_oeuvre),
   livraison_oeuvre = values(livraison_oeuvre);";
-  
+
   try
   {
     $qry6 = $db->exec($sql6);
