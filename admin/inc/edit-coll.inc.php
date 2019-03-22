@@ -144,6 +144,7 @@ if(isset($_POST['coll1']))
 if(isset($_POST['coll2-reset']))
 {
   // Destruction des variables de session
+  unset($_SESSION['loadedColl']);
   unset($_SESSION['currentColl']);
   unset($_SESSION['nomCurrentColl']);
   header('Location: editer-collectif.php');
