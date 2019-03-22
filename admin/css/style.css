@@ -235,11 +235,15 @@ table#expo-emp td
 }
 /* FORM / Fin */
 
+table.list-collab
+{
+  border-collapse: collapse;
+}
+
 table.list-collab , .list-collab th , .list-collab td
 {
   text-align: center;
   padding: 0.6rem;
-
 }
 
 .list-collab tr:nth-child(even)
@@ -247,21 +251,25 @@ table.list-collab , .list-collab th , .list-collab td
   background-color: #f0f0f0;
 }
 
-table.list-collab
-{
-  border-collapse: collapse;
-
-}
-
 .list-collab th
 {
   color: #BF0F3D;
 }
 
+.upload-preview
+{
+  width: 350px;
+}
+
+.upload-submit
+{
+  padding: 0.5rem;
+  margin: 0;
+}
+
 main h2, main h3
 {
   color: #BF0F3D;
-  /*margin-top: 1rem;*/
 }
 
 main h3

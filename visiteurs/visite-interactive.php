@@ -94,7 +94,7 @@ foreach($q2 as $val)
   {
       $listOeuvre .= "\t\t\t\t<li>{$itf['artiste']} : <strong>{$prenomArt} {$nomArt}</strong></li>\r\n";
   }
-  
+
   $listOeuvre .= "\t\t\t\t<li><a href='fiche.php?id=$idOeuvre'><button>{$itf['fiche_detail']}</button></a></li>\r\n";
   $listOeuvre .= "\t\t\t\t<li><a href='#plan'>{$itf['retour_plan']}</a></li>\r\n";
   $listOeuvre .= "\t\t\t</ul>\r\n";
@@ -122,6 +122,7 @@ require_once('inc/head.inc.php');
       </div>
       <div class="container">
         <h2 id="plan"><?php echo $itf['plan_int']; ?></h2>
+        <img src="img/plan.png" alt="plan">
 <?php echo $listPuce; ?>
       </div>
       <div class="container">
