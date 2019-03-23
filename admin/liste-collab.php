@@ -23,16 +23,15 @@ require_once('inc/nav.inc.php');
 /* LISTE DES COLLABORATEURS */
 /****************************/
 // Liste des collaborateurs
-
 if (isset($_GET['del']) && strlen($_GET['del'])==3)
 {
   $del=$_GET['del'];
-  $requete1="DELETE  FROM collaborateurs WHERE id_co = '$del'";
+  $requete1="DELETE  FROM collaborateurs WHERE id_co = '$del' AND privilege_co = 'user'";
   $db->exec($requete1);
   header('Location:liste-collab.php');
   exit();
 }
-//<a href=\"liste-collab.php?del={$trigramme}\" title=\"Supprimer le collaborateur\"><button>Supprimer</button></a>
+
 
   $listCollab = "";
   $requete2="SELECT nom_co, prenom_co, email_co, id_co, privilege_co FROM collaborateurs ORDER BY privilege_co ASC";
