@@ -160,6 +160,8 @@ if (isset($_POST['editerCollaborateur']))
 //Destruction de la variable de session (et de toutes les variables en général)
  unset($_SESSION['collab']);
 
+
+
 //etape 4
 //modifier mot de passe
 
