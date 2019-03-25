@@ -38,7 +38,7 @@ COMPOSER :
 
 CODE COMPLÉMENTAIRE :
 
-ALTER TABLE `collaborateurs` CHANGE `id_co` `id_co` VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'user' COMMENT 'ex : Guillaume Hénaud = GHD / Le trigramme sert aussi de login';
+ALTER TABLE `collaborateurs` CHANGE `privilege_co` `privilege_co` ENUM('admin','user') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'user';
 
 ALTER TABLE `composer` CHANGE `jeu_de_piste` `jeu_de_piste` TINYINT(1) UNSIGNED NULL DEFAULT NULL COMMENT '5 oeuvres de l\'exposition sont choisies dans le cadre du jeu de piste';
 

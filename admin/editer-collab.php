@@ -32,14 +32,13 @@ $trigramme = "";
 $submitVal = "Créer";
 
 //etape 1
-
 // récupération info collaborateurs
 if (isset($_GET['collab']))
 {
   $submitVal = "Modifier";
   $infoCollab = "";
   $collab = $_GET['collab'];
-  $requete1="SELECT nom_co, prenom_co, email_co, id_co FROM collaborateurs WHERE id_co='$collab'";
+  $requete1="SELECT nom_co, prenom_co, email_co, id_co, pwd_co FROM collaborateurs WHERE id_co='$collab'";
   $reponse=$db->query($requete1);
 
   foreach ($reponse as $info)
@@ -48,23 +47,29 @@ if (isset($_GET['collab']))
     $prenom = $info['prenom_co'];
     $email = $info['email_co'];
     $trigramme = $info['id_co'];
+    $pwd = $info['pwd_co'];
   }
+}
+
+// Création de la variable de session
+if(isset($_GET['collab']) && strlen($_GET['collab']) == 3)
+{
+    $_SESSION['collab'] = $_GET['collab'];
+    $_SESSION['pwd'] = $pwd;
 }
 
 // etape 2
 // traitement formulaire
 if (isset($_POST['editerCollaborateur']))
 {
-  if
-  (
+  if (
   (isset($_POST['nom']) && !empty($_POST['nom']) && (strlen($_POST['nom']) <= 100))
   &&
   (isset($_POST['prenom']) && !empty($_POST['prenom']) && (strlen($_POST['prenom']) <= 100))
   &&
   (isset($_POST['email']) && !empty($_POST['email']) && (strlen($_POST['email']) <= 100))
   &&
-  (isset($_POST['trigramme']) && !empty($_POST['trigramme']) && (strlen($_POST['trigramme']) == 3))
-  )
+  (isset($_POST['trigramme']) && !empty($_POST['trigramme']) && (strlen($_POST['trigramme']) == 3)) )
   {
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
@@ -72,8 +77,30 @@ if (isset($_POST['editerCollaborateur']))
     $trigramme = $_POST['trigramme'];
     $pwd = pwdGen();
 
-    $requete2 = "INSERT INTO collaborateurs(id_co, nom_co, prenom_co, email_co, pwd_co)
-    VALUES(:trigramme, :nom, :prenom, :email, :pwd);";
+    if($_SESSION['collab'] && $_POST['modifpwd'])
+    {
+      // On régénere le mot de passe
+      $requete2 = "UPDATE collaborateurs
+                    SET id_co = :trigramme,
+                    nom_co = :nom,
+                    prenom_co = :prenom,
+                    email_co = :email,
+                    pwd_co = :pwd
+                    WHERE id_co = '{$_SESSION['collab']}';";
+    } else if ($_SESSION['collab'] && !$_POST['modifpwd']) {
+      // On conserve le mot de passe
+      $requete2 = "UPDATE collaborateurs
+                    SET id_co = :trigramme,
+                    nom_co = :nom,
+                    prenom_co = :prenom,
+                    email_co = :email,
+                    pwd_co = '{$_SESSION['pwd']}'
+                    WHERE id_co = '{$_SESSION['collab']}';";
+    } else {
+      // Mode créer
+      $requete2 = "INSERT INTO collaborateurs(id_co, nom_co, prenom_co, email_co, pwd_co)
+                    VALUES(:trigramme, :nom, :prenom, :email, :pwd);";
+    }
 
     $reponse2 = $db->prepare($requete2);
     $reponse2->bindValue(':trigramme', $trigramme, PDO::PARAM_STR);
@@ -89,68 +116,8 @@ if (isset($_POST['editerCollaborateur']))
     }
     catch (Exception $e)
     {
-      $warning = "<p class='warning'>Une erreur est survenue !</p>";
-    }
-  } else {
-    $warning = "<p class='warning'>Le formulaire n'a pas été correctement rempli !</p>";
-  }
-}
-
-
-// Création de la variable de session
-if(isset($_GET['collab']) && intval($_GET['collab']) > 0)
-{
-    // Variable à utiliser dans ta requête
-    $_SESSION['collab'] = intval($_GET['collab']);
-    echo $_SESSION['collab'];
-}
-
-//etape 3
-//traitement formulaire
-if (isset($_POST['editerCollaborateur']))
-{
-  if
-  (
-  (isset($_POST['nom']) && !empty($_POST['nom']) && (strlen($_POST['nom']) <= 100))
-  &&
-  (isset($_POST['prenom']) && !empty($_POST['prenom']) && (strlen($_POST['prenom']) <= 100))
-  &&
-  (isset($_POST['email']) && !empty($_POST['email']) && (strlen($_POST['email']) <= 100))
-  &&
-  (isset($_POST['trigramme']) && !empty($_POST['trigramme']) && (strlen($_POST['trigramme']) == 3))
-  )
-  {
-    if (isset($_SESSION['collab']))
-    {
-}
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $email = $_POST['email'];
-    $trigramme = $_POST['trigramme'];
-    $_SESSION['collab'];
-    $requete3 = "UPDATE collaborateurs SET id_co = :trigramme, nom_co = :nom, prenom_co = :prenom, email_co = :email
-                  WHERE id_co = '$_SESSION[collab]';";
-    // $requete3 = "UPDATE collaborateurs
-    //               SET id_co = :trigramme,
-    //               nom_co = :nom,
-    //               prenom_co = :prenom,
-    //               email_co = :email
-    //               WHERE id_co = {$_SESSION['collab']};";
-
-    $reponse3 = $db->prepare($requete3);
-    $reponse3->bindValue(':trigramme', $trigramme, PDO::PARAM_STR);
-    $reponse3->bindValue(':nom', $nom, PDO::PARAM_STR);
-    $reponse3->bindValue(':prenom', $prenom, PDO::PARAM_STR);
-    $reponse3->bindValue(':email', $email, PDO::PARAM_STR);
-
-    try
-    {
-      $reponse3->execute();
-      $warning = "<p class='warning'>L'utilisateur a bien été modifié !</p>";
-    }
-    catch (Exception $e)
-    {
-      $warning = "<p class='warning'>Une erreur est survenue !</p>";
+      //$warning = "<p class='warning'>Une erreur est survenue !</p>";
+      $warning = "<p class='warning'>{$e}</p>";
     }
   } else {
     $warning = "<p class='warning'>Le formulaire n'a pas été correctement rempli !</p>";
@@ -158,12 +125,11 @@ if (isset($_POST['editerCollaborateur']))
 }
 
 //Destruction de la variable de session (et de toutes les variables en général)
- unset($_SESSION['collab']);
+//unset($_SESSION['collab']);
+//unset($_SESSION['pwd']);
 
 //etape 4
 //modifier mot de passe
-
-
 ?>
 <?php require_once('inc/head.inc.php'); ?>
           <!-- FRONT DE LA PAGE -->
