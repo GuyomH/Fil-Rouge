@@ -102,8 +102,9 @@ if(isset($_GET['collab']) && intval($_GET['collab']) > 0)
 {
     // Variable à utiliser dans ta requête
     $_SESSION['collab'] = intval($_GET['collab']);
-
+    echo $_SESSION['collab'];
 }
+
 //etape 3
 //traitement formulaire
 if (isset($_POST['editerCollaborateur']))
@@ -121,8 +122,7 @@ if (isset($_POST['editerCollaborateur']))
   {
     if (isset($_SESSION['collab']))
     {
-
-    }
+}
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $email = $_POST['email'];
@@ -156,6 +156,7 @@ if (isset($_POST['editerCollaborateur']))
     $warning = "<p class='warning'>Le formulaire n'a pas été correctement rempli !</p>";
   }
 }
+
 //Destruction de la variable de session (et de toutes les variables en général)
  unset($_SESSION['collab']);
 
