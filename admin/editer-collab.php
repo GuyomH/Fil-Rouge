@@ -128,6 +128,8 @@ if (isset($_POST['editerCollaborateur']))
 //unset($_SESSION['collab']);
 //unset($_SESSION['pwd']);
 
+
+
 //etape 4
 //modifier mot de passe
 ?>
