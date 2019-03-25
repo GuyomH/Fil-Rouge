@@ -44,14 +44,19 @@ if (isset($_GET['del']) && strlen($_GET['del'])==3)
     $email = $info['email_co'];
     $trigramme = $info['id_co'];
     $role = $info['privilege_co'];
-
-    $listCollab .= "<tr><td>$nom</td><td>$prenom</td><td>$email</td><td>$trigramme</td><td>$role</td><td class='list'><a href=\"editer-collab.php?collab={$trigramme}\" title=\"Edition le collaborateur\"><button>Éditer</button></a>  <a href=\"liste-collab.php?del={$trigramme}\" title=\"Supprimer le collaborateur\"><button>Supprimer</button></a></td></tr>\r\n";
+    if ($role == "user")
+    {
+      $delButton = '<a href=\"liste-collab.php?del={$trigramme}\" title=\"Supprimer le collaborateur\"><button>Supprimer</button></a>';
+    } else {
+      $delButton = "";
+    }
+    $listCollab .= "<tr><td>$nom</td><td>$prenom</td><td>$email</td><td>$trigramme</td><td>$role</td><td class='list'><a href=\"editer-collab.php?collab={$trigramme}\" title=\"Edition le collaborateur\"><button>Éditer</button></a>  {$delButton}</td></tr>\r\n";
 
   }
 ?>
 <?php require_once('inc/head.inc.php'); ?>
           <!-- FRONT DE LA PAGE -->
-          <h2>Liste des collaborateurs</h2>
+
           <table class="list-collab">
             <tr><th>Nom</th><th>Prénom</th><th>Email</th><th>Trigramme</th><th>Role</th></tr>
             <?php echo $listCollab; ?>

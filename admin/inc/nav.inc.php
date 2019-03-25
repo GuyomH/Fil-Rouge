@@ -118,7 +118,7 @@ switch (basename($_SERVER['PHP_SELF']))
     break;
   case 'editer-collab.php':
     // $title = $hTitle = "AJOUTER UN COLLABORATEUR";
-    if(isset($_GET['collab']) && !empty($_GET['collab']))
+    if(isset($_GET['collab']) && !empty($_GET['collab']) || isset($_SESSION['collab']))
     {
       $title = $hTitle = "ÉDITER UN COLLABORATEUR";
     } else {

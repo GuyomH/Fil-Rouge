@@ -31,6 +31,16 @@ $email = "";
 $trigramme = "";
 $submitVal = "Créer";
 
+// Reset
+if(isset($_POST['editerCollab-reset']))
+{
+  // Destruction des variables de session
+  unset($_SESSION['collab']);
+  unset($_SESSION['pwd']);
+  header('Location: editer-collab.php');
+  exit();
+}
+
 //etape 1
 // récupération info collaborateurs
 if (isset($_GET['collab']))
@@ -49,6 +59,11 @@ if (isset($_GET['collab']))
     $trigramme = $info['id_co'];
     $pwd = $info['pwd_co'];
   }
+}
+
+if (isset($_SESSION['collab']))
+{
+  $submitVal = "Modifier";
 }
 
 // Création de la variable de session
@@ -77,7 +92,7 @@ if (isset($_POST['editerCollaborateur']))
     $trigramme = $_POST['trigramme'];
     $pwd = pwdGen();
 
-    if($_SESSION['collab'] && $_POST['modifpwd'])
+    if(isset($_SESSION['collab']) && isset($_POST['modifpwd']))
     {
       // On régénere le mot de passe
       $requete2 = "UPDATE collaborateurs
@@ -87,14 +102,15 @@ if (isset($_POST['editerCollaborateur']))
                     email_co = :email,
                     pwd_co = :pwd
                     WHERE id_co = '{$_SESSION['collab']}';";
-    } else if ($_SESSION['collab'] && !$_POST['modifpwd']) {
+    } else if (isset($_SESSION['collab']) && !isset($_POST['modifpwd'])) {
       // On conserve le mot de passe
+      $pwd = $_SESSION['pwd'];
       $requete2 = "UPDATE collaborateurs
                     SET id_co = :trigramme,
                     nom_co = :nom,
                     prenom_co = :prenom,
                     email_co = :email,
-                    pwd_co = '{$_SESSION['pwd']}'
+                    pwd_co = :pwd
                     WHERE id_co = '{$_SESSION['collab']}';";
     } else {
       // Mode créer
@@ -116,21 +132,14 @@ if (isset($_POST['editerCollaborateur']))
     }
     catch (Exception $e)
     {
-      //$warning = "<p class='warning'>Une erreur est survenue !</p>";
-      $warning = "<p class='warning'>{$e}</p>";
+      $warning = "<p class='warning'>Une erreur est survenue !</p>";
+      // $warning = "<p class='warning'>{$e}</p>";
     }
   } else {
     $warning = "<p class='warning'>Le formulaire n'a pas été correctement rempli !</p>";
   }
 }
 
-//Destruction de la variable de session (et de toutes les variables en général)
-//unset($_SESSION['collab']);
-//unset($_SESSION['pwd']);
-
-
-//etape 4
-//modifier mot de passe
 ?>
 <?php require_once('inc/head.inc.php'); ?>
           <!-- FRONT DE LA PAGE -->
@@ -140,10 +149,15 @@ if (isset($_POST['editerCollaborateur']))
     <p><label for="prenom">Prénom* :</label> <input type="text" id="prenom" name="prenom" maxlength="100" value="<?php echo $prenom ?>"></p>
     <p><label for="email">Email :</label> <input type="text" id="email" name="email" maxlength="100" value="<?php echo $email ?>"></p>
     <p><label for="trigramme">Trigramme :</label> <input type="text" id="trigramme" name="trigramme" maxlength="3" value="<?php echo $trigramme ?>"></p>
-    <p><label for="modifPwd">Modifier Mot de passe :</label> <input type="checkbox" id="modifpwd" name="modifpwd"></p>
+
+
+<?php if(isset($_GET['collab']) || isset($_SESSION['collab'])){ ?>
+    <p><label for="pwd">Mot de passe :</label> <input type="text" id="pwd" name="pwd" maxlength="10" disabled value="<?php echo $pwd ?>"></p>
+    <p><input type="checkbox" id="modifpwd" name="modifpwd" value="true"> <label for="modifPwd" class="inline-input">Modifier Mot de passe </label></p>
+<?php } ?>
     <p>
       <input type="submit" name="editerCollaborateur" id="editCollab" value="<?php echo $submitVal; ?>">
-      <input type="submit" name="editerCollaborateur-reset" id="editCollab-reset" value="Annuler">
+      <input type="submit" name="editerCollab-reset" id="editerCollab-reset" value="Annuler">
     </p>
   </form>
 <?php require_once('inc/foot.inc.php'); ?>
