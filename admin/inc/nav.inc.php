@@ -11,9 +11,9 @@ $menuArray = // Structuration du menu sous forme de tableau
 
   [
     'GESTION',
-    ['Oeuvres', 'editer-oeuvre.php', 'Créer ou éditer une oeuvre'],
+    ['Collectifs', 'editer-collectif.php', 'Créer ou éditer un collectif'],
     ['Artistes', 'editer-artiste.php', 'Créer ou éditer un artiste'],
-    ['Collectifs', 'editer-collectif.php', 'Créer ou éditer un collectif']
+    ['Oeuvres', 'editer-oeuvre.php', 'Créer ou éditer une oeuvre']
   ],
 
   [
@@ -98,7 +98,12 @@ switch (basename($_SERVER['PHP_SELF']))
     $title = $hTitle = "ÉDITER / CRÉER UNE OEUVRE";
     break;
   case 'editer-artiste.php':
-    $title = $hTitle = "ÉDITER / CRÉER UN ARTISTE";
+    if(isset($_SESSION['loadedArt']) || (isset($_POST['select-art']) && ($_POST['select-art'] > 0)))
+    {
+      $title = $hTitle = "ÉDITER UN ARTISTE";
+    } else {
+      $title = $hTitle = "CRÉER UN ARTISTE";
+    }
     break;
   case 'editer-collectif.php':
     if(isset($_SESSION['loadedColl']) || (isset($_POST['select-coll']) && ($_POST['select-coll'] > 0)))

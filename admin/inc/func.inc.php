@@ -1,4 +1,7 @@
 <?php
+// IP réelle (via ipconfig)
+$ip = "192.168.56.1:80";
+
 // Formatage de la date en français
 function frenchDate($date)
 {
@@ -30,6 +33,4 @@ function pwdGen()
   }
   return $pwd;
 }
-
-
 ?>

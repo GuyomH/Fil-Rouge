@@ -12,6 +12,7 @@ $submitVal = "Valider étape 1";
 // Liste des collectifs existants
 $sql0 = "SELECT id_col, nom_col
 FROM collectifs
+WHERE nom_col IS NOT NULL
 ORDER BY nom_col;";
 $qry0 = $db->query($sql0);
 foreach ($qry0 as $coll)
@@ -80,7 +81,7 @@ if(isset($_POST['coll1']))
   isset($_POST['info']) && !empty($_POST['info']) && (strlen($_POST['info']) <= 1000) )
   {
     // Variabilisation
-    $nom = trim($_POST['nom']);
+    $nom = ucWords(mb_strToLower(trim($_POST['nom'])));
     $info = trim($_POST['info']);
 
     // Insertion des données en français
@@ -144,10 +145,19 @@ if(isset($_POST['coll1']))
 if(isset($_POST['coll2-reset']))
 {
   // Destruction des variables de session
+  unset($_SESSION['loadedColl']);
   unset($_SESSION['currentColl']);
   unset($_SESSION['nomCurrentColl']);
   header('Location: editer-collectif.php');
   exit();
+}
+
+// Delete média (type unique : jpg)
+if(isset($_POST['del']) && intval($_POST['del']) > 0)
+{
+    $path = substr_replace((__dir__), "", -10);
+    unlink($path."/collectifs/".$_POST['del'].".jpg");
+    $warning = "<p class=\"warning\">Supression du fichier réussie !</p>";
 }
 
 // Fichier de traitement de l'upload
