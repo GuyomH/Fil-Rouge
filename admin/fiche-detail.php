@@ -32,7 +32,7 @@ if(isset($_GET['expo']) && !empty(intval($_GET['expo'])))
 }
 
 // Listing du programme de l'expo
-$sql = "SELECT E.titre_expo, EMP.num_emp, titre_oeuvre, O.id_oeuvre, livraison_oeuvre
+$sql = "SELECT E.titre_expo, E.debut_expo, E.fin_expo, EMP.num_emp, titre_oeuvre, O.id_oeuvre, livraison_oeuvre
 FROM oeuvres AS O
 INNER JOIN composer AS C ON O.id_oeuvre = C.id_oeuvre
 INNER JOIN expositions AS E ON C.id_expo = E.id_expo
@@ -40,14 +40,7 @@ INNER JOIN emplacements AS EMP ON C.num_emp = EMP.num_emp
 WHERE E.id_expo = $idExpo
 ORDER BY EMP.num_emp;";
 
-// URL de base
-// $baseUrl = str_replace
-// (
-//   basename($_SERVER['PHP_SELF']),
-//   "",
-//   "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}"
-// );
-$baseUrl = "http://localhost/php/Fil-Rouge/visiteurs/";
+$baseUrl = "http://{$ip}/php/Fil-Rouge/visiteurs/";
 
 $listing = "\t\t\t<ul id=\"prog\">\r\n";
 $qry = $db->query($sql);
@@ -58,7 +51,9 @@ foreach ($qry as $val)
   <img src=\"https://api.qrserver.com/v1/create-qr-code/?data={$url}&amp;format=svg\" alt=\"\" title=\"\" /></li>\r\n";
 }
 $listing .= "\t\t\t</ul>\r\n";
-$titre = $val['titre_expo'];
+$debut = frenchDate($val['debut_expo']);
+$fin = frenchDate($val['fin_expo']);
+$titre = "{$val['titre_expo']} <wbr><i>({$debut} - {$fin})<i>";
 ?>
 <?php require_once('inc/head.inc.php'); ?>
 

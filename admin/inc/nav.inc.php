@@ -11,9 +11,9 @@ $menuArray = // Structuration du menu sous forme de tableau
 
   [
     'GESTION',
-    ['Oeuvres', 'editer-oeuvre.php', 'Créer ou éditer une oeuvre'],
+    ['Collectifs', 'editer-collectif.php', 'Créer ou éditer un collectif'],
     ['Artistes', 'editer-artiste.php', 'Créer ou éditer un artiste'],
-    ['Collectifs', 'editer-collectif.php', 'Créer ou éditer un collectif']
+    ['Oeuvres', 'editer-oeuvre.php', 'Créer ou éditer une oeuvre']
   ],
 
   [

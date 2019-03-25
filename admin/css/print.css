@@ -1,0 +1,21 @@
+html, body
+{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  position: relative;
+}
+
+nav, header, footer
+{
+  display: none;
+}
+
+main h2
+{
+  font-size: 2rem;
+}

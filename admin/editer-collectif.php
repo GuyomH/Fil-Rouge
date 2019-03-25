@@ -35,7 +35,8 @@ require_once('inc/edit-coll.inc.php');
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="single-line">
           <p>
           <select name="select-coll" id="select-coll">
-            <option hidden value=\"\">Choisir</option>
+            <option hidden value=\"\">Choisir un collectif</option>
+            <option value=\"0\">-</option>
 <?php echo $listColl; ?>
           </select>
           <input type="submit" value="Sélectionner">
@@ -62,14 +63,22 @@ require_once('inc/edit-coll.inc.php');
 
         <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
           <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $size; ?>">
-          <input type="file" name="fichier" accept=".jpg,.png">
-          <input type="submit" name="upload" value="Envoyer le fichier" class="upload-submit">
+          <p>
+            <input type="file" name="fichier" accept=".jpg">
+            <input type="submit" name="upload" value="Envoyer le fichier" class="upload-submit">
+          </p>
         </form>
 
         <?php
         if(file_exists("../collectifs/".$_SESSION['currentColl'].".jpg"))
         {
-          echo "<p class=\"upload-preview\"><img src=\"../collectifs/".$_SESSION['currentColl'].".jpg\" alt=\"photo du collectif\"></p>";
+          echo "<div class=\"upload-preview\">
+          <img src=\"../collectifs/{$_SESSION['currentColl']}.jpg\" alt=\"photo du collectif\">
+          <form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">
+            <input type=\"hidden\" name=\"del\" value=\"{$_SESSION['currentColl']}\">
+            <button type=\"submit\"><i class=\"fas fa-trash-alt\"></i></button>
+          </form>
+        </div>\r\n";
         }
         ?>
 
