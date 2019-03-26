@@ -47,13 +47,13 @@ $qry = $db->query($sql);
 foreach ($qry as $val)
 {
   $url = urlEncode($baseUrl."fiche.php?id=".$val['id_oeuvre']);
-  $listing .= "\t\t\t\t<li><h3>{$val['num_emp']} : {$val['titre_oeuvre']}<h3>
+  $listing .= "\t\t\t\t<li><h3>{$val['num_emp']} : {$val['titre_oeuvre']}</h3>
   <img src=\"https://api.qrserver.com/v1/create-qr-code/?data={$url}&amp;format=svg\" alt=\"\" title=\"\" /></li>\r\n";
 }
 $listing .= "\t\t\t</ul>\r\n";
 $debut = frenchDate($val['debut_expo']);
 $fin = frenchDate($val['fin_expo']);
-$titre = "{$val['titre_expo']} <wbr><i>({$debut} - {$fin})<i>";
+$titre = "{$val['titre_expo']} <wbr><i>({$debut} - {$fin})</i>";
 ?>
 <?php require_once('inc/head.inc.php'); ?>
 

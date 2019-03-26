@@ -101,7 +101,7 @@ foreach($q2 as $val)
   $listOeuvre .= "\t\t</div>\r\n";
 
   //generation des puces
-  $listPuce .= "<a href='#emp{$empOeuvre}' title='{$empOeuvre}'><div class='puce'></div></a>";
+  $listPuce .= "\t\t\t<a href=\"#emp{$empOeuvre}\" title=\"{$empOeuvre}\" id=\"e{$empOeuvre}\" class=\"puce\"><div></div></a>\r\n";
 }
 
 if(empty($listOeuvre))
@@ -122,8 +122,10 @@ require_once('inc/head.inc.php');
       </div>
       <div class="container">
         <h2 id="plan"><?php echo $itf['plan_int']; ?></h2>
-        <img src="img/plan.png" alt="plan">
+        <div id="map">
+          <img src="img/plan.png" alt="plan">
 <?php echo $listPuce; ?>
+        </div>
       </div>
       <div class="container">
         <h2><?php echo $itf['liste_oeuvre']; ?></h2>

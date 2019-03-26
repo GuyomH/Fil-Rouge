@@ -1,5 +1,5 @@
 <?php
-// IP réelle (via ipconfig)
+// IP réelle + port (via ipconfig)
 $ip = "192.168.56.1:80";
 
 // Formatage de la date en français
@@ -32,5 +32,23 @@ function pwdGen()
     $pwd .= $chars[rand(0,  $indexMax)];
   }
   return $pwd;
+}
+
+// Fonction pour retirer les accents
+function stripAccents($string)
+{
+  $search = array("à","á","â","ã","ä","ç","è","é","ê","ë","ì","í","î","ï","ñ","ò","ó","ô","õ","ö","ù","ú","û","ü","ý","ÿ");
+  $replace = array("a","a","a","a","a","c","e","e","e","e","i","i","i","i","n","o","o","o","o","o","u","u","u","u","y","y");
+  return str_replace($search, $replace, $string);
+}
+
+// Générateur de trigrammes
+// 1ère lettre du nom / 1ère et dernière lettre du prénom
+function triGen($nom, $prenom)
+{
+  $trig = mb_substr(trim($nom), 0, 1);
+  $trig .= mb_substr(trim($prenom), 0, 1);
+  $trig .= mb_substr(trim($prenom), -1, 1);
+  return strToLower(stripAccents($trig));
 }
 ?>

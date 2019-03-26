@@ -53,7 +53,6 @@ audio {
   background-size: 30% auto;
   background-repeat: no-repeat;
   position: relative;
-
 }
 
 .container
@@ -148,6 +147,341 @@ header nav a:hover
 }
 /* HEADER FIN*/
 
+/* PLAN INTERACTIF */
+#map
+{
+  position: relative;
+}
+
+a.puce
+{
+  position: absolute;
+  margin: auto;
+  width: 6vmin;
+  height: 6vmin;
+}
+
+#e1-01
+{
+  top: 0%;
+  bottom: 10%;
+  left: 50%;
+  right: 0;
+}
+
+#e1-02
+{
+  top: 0;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+}
+
+#e1-03
+{
+  top: 0;
+  bottom: 10%;
+  left: 0;
+  right: 50%;
+}
+
+#e1-04
+{
+  top: 0;
+  bottom: 20%;
+  left: 0;
+  right: 50%;
+}
+
+#e1-05
+{
+  top: 0;
+  bottom: 20%;
+  left: 0;
+  right: 0;
+}
+
+#e1-06
+{
+  top: 0;
+  bottom: 20%;
+  left: 50%;
+  right: 0;
+}
+
+#e1-07
+{
+  top: 0;
+  bottom: 30%;
+  left: 50%;
+  right: 0;
+}
+
+#e1-08
+{
+  top: 0;
+  bottom: 30%;
+  left: 0;
+  right: 0;
+}
+
+#e1-09
+{
+  top: 0;
+  bottom: 30%;
+  left: 0;
+  right: 50%;
+}
+
+#e1-10
+{
+  top: 0;
+  bottom: 40%;
+  left: 0;
+  right: 0;
+}
+
+#e2-01
+{
+  top: 77%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+}
+
+#e2-02
+{
+  top: 77%;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+}
+
+#e2-03
+{
+  top: 77%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#e2-04
+{
+  top: 77%;
+  bottom: 0;
+  left: 0;
+  right: 30%;
+}
+
+#e2-05
+{
+  top: 77%;
+  bottom: 0;
+  left: 0;
+  right: 60%;
+}
+
+#e2-06
+{
+  top: 65%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+}
+
+#e2-07
+{
+  top: 65%;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+}
+
+#e2-08
+{
+  top: 65%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#e2-09
+{
+  top: 65%;
+  bottom: 0;
+  left: 0;
+  right: 30%;
+}
+
+#e2-10
+{
+  top: 65%;
+  bottom: 0;
+  left: 0;
+  right: 60%;
+}
+
+#e2-11
+{
+  top: 53%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+}
+
+#e2-12
+{
+  top: 53%;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+}
+
+#e2-13
+{
+  top: 53%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#e2-14
+{
+  top: 53%;
+  bottom: 0;
+  left: 0;
+  right: 30%;
+}
+
+#e2-15
+{
+  top: 53%;
+  bottom: 0;
+  left: 0;
+  right: 60%;
+}
+
+#e2-16
+{
+  top: 41%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+}
+
+#e2-17
+{
+  top: 41%;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+}
+
+#e2-18
+{
+  top: 41%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#e2-19
+{
+  top: 41%;
+  bottom: 0;
+  left: 0;
+  right: 30%;
+}
+
+#e2-20
+{
+  top: 41%;
+  bottom: 0;
+  left: 0;
+  right: 60%;
+}
+
+#e2-21
+{
+  top: 29%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+}
+
+#e2-22
+{
+  top: 29%;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+}
+
+#e2-23
+{
+  top: 29%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#e2-24
+{
+  top: 29%;
+  bottom: 0;
+  left: 0;
+  right: 30%;
+}
+
+#e2-25
+{
+  top: 29%;
+  bottom: 0;
+  left: 0;
+  right: 60%;
+}
+
+#e2-26
+{
+  top: 19%;
+  bottom: 0;
+  left: 60%;
+  right: 0;
+}
+
+#e2-27
+{
+  top: 19%;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+}
+
+#e2-28
+{
+  top: 19%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#e2-29
+{
+  top: 19%;
+  bottom: 0;
+  left: 0;
+  right: 30%;
+}
+
+#e2-30
+{
+  top: 19%;
+  bottom: 0;
+  left: 0;
+  right: 60%;
+}
+/* PLAN INTERACTIF / FIN */
+
 /* MAIN */
 main, footer
 {
@@ -230,7 +564,6 @@ main li
 .fiche li {
   color: black;
 }
-
 /* MAIN / FIN */
 
 /* FOOTER */

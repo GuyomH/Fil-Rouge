@@ -41,6 +41,13 @@ if(isset($_POST['editerCollab-reset']))
   exit();
 }
 
+// Reset au rechargement de la page
+if(isset($_SESSION['collab']) && !isset($_POST['editerCollaborateur']))
+{
+  unset($_SESSION['collab']);
+  unset($_SESSION['pwd']);
+}
+
 //etape 1
 // récupération info collaborateurs
 if (isset($_GET['collab']))
@@ -86,9 +93,9 @@ if (isset($_POST['editerCollaborateur']))
   &&
   (isset($_POST['trigramme']) && !empty($_POST['trigramme']) && (strlen($_POST['trigramme']) == 3)) )
   {
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $email = $_POST['email'];
+    $nom = mb_strToUpper(trim($_POST['nom']));
+    $prenom = ucFirst(mb_strToLower(trim($_POST['prenom'])));
+    $email = mb_strToLower(trim($_POST['email']));
     $trigramme = $_POST['trigramme'];
     $pwd = pwdGen();
 
@@ -128,12 +135,18 @@ if (isset($_POST['editerCollaborateur']))
     try
     {
       $reponse2->execute();
-      $warning = "<p class='warning'>Utilisateur enregistré !</p>";
+      if (isset($_SESSION['collab']))
+      {
+        $warning = "<p class='warning'>Modifications enregistrées !</p>";
+      } else {
+        $warning = "<p class='warning'>Utilisateur enregistré !</p>";
+        $warning .= "<p class='warning'>Le mot de passe de l'utilisateur est : {$pwd}</p>";
+      }
     }
     catch (Exception $e)
     {
       $warning = "<p class='warning'>Une erreur est survenue !</p>";
-      // $warning = "<p class='warning'>{$e}</p>";
+      //$warning = "<p class='warning'>{$e}</p>";
     }
   } else {
     $warning = "<p class='warning'>Le formulaire n'a pas été correctement rempli !</p>";

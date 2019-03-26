@@ -131,7 +131,8 @@ $sql_fr = [
   INNER JOIN oeuvres AS O ON C.id_oeuvre = O.id_oeuvre
   INNER JOIN artistes AS A ON O.id_art = A.id_art
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
-  WHERE CURDATE() BETWEEN debut_expo AND fin_expo;",
+  WHERE CURDATE() BETWEEN debut_expo AND fin_expo
+  ORDER BY EMP.num_emp;",
 
   "fiche_detail"=>"SELECT O.id_oeuvre, A.id_art, COL.id_col, titre_oeuvre, descriptif_oeuvre, nom_art, prenom_art, bio_art, nom_col, info_col
   FROM oeuvres AS O
@@ -180,7 +181,8 @@ $sql_en = [
   INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
-  AND (code_langue = 'en');",
+  AND (code_langue = 'en')
+  ORDER BY EMP.num_emp;",
 
   "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
   FROM oeuvres AS O
@@ -239,7 +241,8 @@ $sql_zh = [
   INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
-  AND (code_langue = 'zh');",
+  AND (code_langue = 'zh')
+  ORDER BY EMP.num_emp;",
 
   "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
   FROM oeuvres AS O
