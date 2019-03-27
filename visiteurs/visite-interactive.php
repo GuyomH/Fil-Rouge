@@ -101,7 +101,8 @@ foreach($q2 as $val)
   $listOeuvre .= "\t\t</div>\r\n";
 
   //generation des puces
-  $listPuce .= "\t\t\t<a href=\"#emp{$empOeuvre}\" title=\"{$empOeuvre}\" id=\"e{$empOeuvre}\" class=\"puce\"><div></div></a>\r\n";
+  $number = substr($empOeuvre,-2);
+  $listPuce .= "\t\t\t<a href=\"#emp{$empOeuvre}\" title=\"{$empOeuvre}\" id=\"e{$empOeuvre}\" class=\"puce\"><div class='emplacement'>{$number}</div></a>\r\n";
 }
 
 if(empty($listOeuvre))

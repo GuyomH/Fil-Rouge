@@ -159,6 +159,7 @@ a.puce
   margin: auto;
   width: 6vmin;
   height: 6vmin;
+  text-decoration: none;
 }
 
 #e1-01
@@ -480,6 +481,18 @@ a.puce
   left: 0;
   right: 60%;
 }
+
+.emplacement
+{
+  color: #fff;
+  /* font-size: 0.8rem;
+  margin-top: 0.2rem; */
+  font-size: 4vmin;
+  margin-top: 0.1rem;
+}
+
+
+
 /* PLAN INTERACTIF / FIN */
 
 /* MAIN */
