@@ -33,8 +33,8 @@ foreach($q1 as $val)
     $titreExpo = $val['titre_expo'];
     $descriptifExpo = $val['descriptif_expo'];
   } else {
-    $titreExpo = $val['titre_expo_trad'];
-    $descriptifExpo = $val['descriptif_expo_trad'];
+    $titreExpo = empty($val['titre_expo_trad'])?$itf['no_trad']:$val['titre_expo_trad'];
+    $descriptifExpo = empty($val['descriptif_expo_trad'])?$itf['no_trad']:$val['descriptif_expo_trad'];
   }
   $expoEnCours .= "\t\t<h1>{$titreExpo}</h1>\r\n";
   $expoEnCours .= "\t\t<p class=\"texte\">{$descriptifExpo}</p>\r\n";
@@ -67,7 +67,7 @@ foreach($q2 as $val)
     $nomCol = $val['nom_col'];
     $idOeuvre=$val['id_oeuvre'];
   } else {
-    $titreOeuvre = $val['titre_oeuvre_trad'];
+    $titreOeuvre = empty($val['titre_oeuvre_trad'])?$itf['no_trad']:$val['titre_oeuvre_trad'];
     $empOeuvre = $val['num_emp'];
     $nomArt = $val['nom_art'];
     $prenomArt = $val['prenom_art'];

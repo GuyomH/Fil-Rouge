@@ -28,6 +28,7 @@ $OeuvreDetail = "";
 
 foreach($q1 as $val)
 {
+  // FR
   if(!isset($_COOKIE['lang']) || $_COOKIE['lang'] == "fr")
   {
     $titreOeuvre = $val['titre_oeuvre'];
@@ -40,9 +41,10 @@ foreach($q1 as $val)
     $idOeuvre = $val['id_oeuvre'];
     $idArtiste = $val['id_art'];
     $idCollectif = $val['id_col'];
+  // EN / ZH
   } else {
-    $titreOeuvre = $val['titre_oeuvre_trad'];
-    $descriptifOeuvre = $val['descriptif_oeuvre_trad'];
+    $titreOeuvre = empty($val['titre_oeuvre_trad'])?$itf['no_trad']:$val['titre_oeuvre_trad'];
+    $descriptifOeuvre = empty($val['descriptif_trad'])?$itf['no_trad']:$val['descriptif_trad'];
     $nomArt = $val['nom_art'];
     $prenomArt = $val['prenom_art'];
     $nomCol = $val['nom_col'];
@@ -52,6 +54,7 @@ foreach($q1 as $val)
     $idArtiste = $val['id_art'];
     $idCollectif = $val['id_col'];
   }
+
   $OeuvreDetail .= "\t\t<div class='fiche'>\r\n";
   $OeuvreDetail .= "\t\t<h1>{$titreOeuvre}</h1>\r\n";
   $OeuvreDetail .= "\t\t\t<ul>\r\n";
