@@ -42,11 +42,16 @@ require_once('inc/edit-artiste.inc.php');
           <input type="submit" value="Sélectionner">
           </p>
         </form>
-
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="wide">
-          <p><label for="nom">Nom artiste* :</label> <input type="text" id="nom" name="nom" maxlength="100" value="<?php echo $nomVal ?>"></p>
-          <p><label for="nom">Prénom artiste :</label> <input type="text" id="prenom" name="prenom" maxlength="100" value="<?php echo $prenomVal ?>"></p>
-          <p><label for="bio">Bio artiste* :</label> <textarea id="bio" name="bio" maxlength="1000"><?php echo $bioVal ?></textarea></p>
+          <div class="box">
+            <p><label for="nom">Nom artiste* :</label> <input type="text" id="nom" name="nom" maxlength="100" value="<?php echo $nomVal ?>"></p>
+            <p><label for="nom">Prénom artiste :</label> <input type="text" id="prenom" name="prenom" maxlength="100" value="<?php echo $prenomVal ?>"></p>
+          </div>
+          <div class="box">
+            <p><label for="bio">Bio artiste* :</label> <textarea id="bio" name="bio" maxlength="1000"><?php echo $bioVal ?></textarea></p>
+            <p><label for="bio-en">Bio artiste anglais :</label> <textarea id="bio-en" name="bio-en" maxlength="1000"><?php echo $bioValEn ?></textarea></p>
+            <p><label for="bio-zh">Bio artiste chinois :</label> <textarea id="bio-zh" name="bio-zh" maxlength="1000"><?php echo $bioValZh ?></textarea></p>
+          </div>
           <p><label for="bind-coll">Lier à un collectif :</label>
           <select name="bind-coll" id="bind-coll">
             <option hidden value="">Choisir un collectif</option>
@@ -54,13 +59,12 @@ require_once('inc/edit-artiste.inc.php');
 <?php echo $listColl; ?>
           </select>
           </p>
-          <p><label for="bio-en">Bio artiste anglais :</label> <textarea id="bio-en" name="bio-en" maxlength="1000"><?php echo $bioValEn ?></textarea></p>
-          <p><label for="bio-zh">Bio artiste chinois :</label> <textarea id="bio-zh" name="bio-zh" maxlength="1000"><?php echo $bioValZh ?></textarea></p>
           <p>
             <input type="submit" name="art1" id="art1" value="<?php echo $submitVal ?>">
             <input type="submit" name="art1-reset" id="art1-reset" value="Annuler">
           </p>
-        </form>
+        </div>
+      </form>
 <?php } else { ?>
         <!-- étape 2 -->
         <h2>Étape 2</h2>

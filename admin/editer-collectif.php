@@ -45,9 +45,11 @@ require_once('inc/edit-coll.inc.php');
 
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="wide">
           <p><label for="nom">Nom collectif* :</label> <input type="text" id="nom" name="nom" maxlength="100" value="<?php echo $nomVal ?>"></p>
-          <p><label for="info">Info collectif* :</label> <textarea id="info" name="info" maxlength="1000"><?php echo $infoVal ?></textarea></p>
-          <p><label for="info-en">Info collectif anglais :</label> <textarea id="info-en" name="info-en" maxlength="1000"><?php echo $infoValEn ?></textarea></p>
-          <p><label for="info-zh">Info collectif chinois :</label> <textarea id="info-zh" name="info-zh" maxlength="1000"><?php echo $infoValZh ?></textarea></p>
+          <div class="box">
+            <p><label for="info">Info collectif* :</label> <textarea id="info" name="info" maxlength="1000"><?php echo $infoVal ?></textarea></p>
+            <p><label for="info-en">Info collectif anglais :</label> <textarea id="info-en" name="info-en" maxlength="1000"><?php echo $infoValEn ?></textarea></p>
+            <p><label for="info-zh">Info collectif chinois :</label> <textarea id="info-zh" name="info-zh" maxlength="1000"><?php echo $infoValZh ?></textarea></p>
+          </div>
           <p>
             <input type="submit" name="coll1" id="coll1" value="<?php echo $submitVal ?>">
             <input type="submit" name="coll1-reset" id="coll1-reset" value="Annuler">

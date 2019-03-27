@@ -44,23 +44,28 @@ require_once('inc/edit-oeuvre.inc.php');
         </form>
 
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="wide">
-          <p><label for="titre">Titre oeuvre* :</label> <input type="text" id="titre" name="titre" maxlength="500" value="<?php echo $titreVal ?>"></p>
-
-          <p><label for="desc">Descriptif oeuvre* :</label> <textarea id="desc" name="desc" maxlength="1000"><?php echo $descVal ?></textarea></p>
-
+          <div class="box">
+            <p><label for="titre">Titre oeuvre* :</label> <input type="text" id="titre" name="titre" maxlength="500" value="<?php echo $titreVal ?>"></p>
+            <p><label for="titre-en">Titre oeuvre anglais :</label> <input type="text" id="titre_en" name="titre-en" maxlength="500" value="<?php echo $titreValEn ?>"></p>
+            <p><label for="titre-zh">Titre oeuvre chinois :</label> <input type="text" id="titre_zh" name="titre-zh" maxlength="500" value="<?php echo $titreValZh ?>"></p>
+          </div>
+          <div class="box">
+            <p><label for="desc">Descriptif oeuvre* :</label> <textarea id="desc" name="desc" maxlength="1000"><?php echo $descVal ?></textarea></p>
+            <p><label for="desc-en">Descriptif oeuvre anglais :</label> <textarea id="desc-en" name="desc-en" maxlength="1000"><?php echo $descValEn ?></textarea></p>
+            <p><label for="desc-zh">Descriptif oeuvre chinois :</label> <textarea id="desc-zh" name="desc-zh" maxlength="1000"><?php echo $descValZh ?></textarea></p>
+          </div>
           <p><label for="an">Année oeuvre* :</label> <input type="text" id="an" name="an" maxlength="4" pattern="^\d{4}$" value="<?php echo $anVal ?>"></p>
-
           <p><label for="type-ovr">Type oeuvre* :</label>
             <select name="type-ovr" id="type-ovr">
               <option hidden value="">Choisir un type</option>
 <?php echo $listType; ?>
             </select>
           </p>
-
-          <p><label for="long">Longueur (en cm) :</label> <input type="text" id="long" name="long" maxlength="8" pattern="^[0-9]{0,3}(\.)?[0-9]{0,2}$" value="<?php echo $longVal ?>"></p>
-          <p><label for="larg">Largeur (en cm) :</label> <input type="text" id="larg" name="larg" maxlength="8" pattern="^[0-9]{0,3}(\.)?[0-9]{0,2}$" value="<?php echo $largVal ?>"></p>
-          <p><label for="haut">Hauteur (en cm) :</label> <input type="text" id="haut" name="haut" maxlength="8" pattern="^[0-9]{0,3}(\.)?[0-9]{0,2}$" value="<?php echo $hautVal ?>"></p>
-
+          <div class="box">
+            <p><label for="long">Longueur (en cm) :</label> <input type="text" id="long" name="long" maxlength="8" pattern="^[0-9]{0,3}(\.)?[0-9]{0,2}$" value="<?php echo $longVal ?>"></p>
+            <p><label for="larg">Largeur (en cm) :</label> <input type="text" id="larg" name="larg" maxlength="8" pattern="^[0-9]{0,3}(\.)?[0-9]{0,2}$" value="<?php echo $largVal ?>"></p>
+            <p><label for="haut">Hauteur (en cm) :</label> <input type="text" id="haut" name="haut" maxlength="8" pattern="^[0-9]{0,3}(\.)?[0-9]{0,2}$" value="<?php echo $hautVal ?>"></p>
+          </div>
           <p><label for="bind-art">Lier à un artiste :</label>
           <select name="bind-art" id="bind-art">
             <option hidden value="">Choisir un artiste</option>
@@ -69,10 +74,8 @@ require_once('inc/edit-oeuvre.inc.php');
           </select>
           </p>
 
-          <p><label for="titre-en">Titre oeuvre anglais :</label> <input type="text" id="titre_en" name="titre-en" maxlength="500" value="<?php echo $titreValEn ?>"></p>
-          <p><label for="desc-en">Descriptif oeuvre anglais :</label> <textarea id="desc-en" name="desc-en" maxlength="1000"><?php echo $descValEn ?></textarea></p>
-          <p><label for="titre-zh">Titre oeuvre chinois :</label> <input type="text" id="titre_zh" name="titre-zh" maxlength="500" value="<?php echo $titreValZh ?>"></p>
-          <p><label for="desc-zh">Descriptif oeuvre chinois :</label> <textarea id="desc-zh" name="desc-zh" maxlength="1000"><?php echo $descValZh ?></textarea></p>
+
+
           <p>
             <input type="submit" name="ovr1" id="ovr1" value="<?php echo $submitVal ?>">
             <input type="submit" name="ovr1-reset" id="ovr1-reset" value="Annuler">

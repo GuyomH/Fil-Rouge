@@ -45,18 +45,20 @@ if(isset($_SESSION['editExpo']))
           <?php echo $warning; ?>
 
           <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="wide">
-            <p><label for="titre">Titre* :</label> <input type="text" id="titre" name="titre" maxlength="500" value="<?php echo $titreVal ?>"></p>
-            <p><label for="desc">Descriptif* :</label> <textarea id="desc" name="desc" maxlength="1000"><?php echo $descVal ?></textarea></p>
-
-            <p><label for="titre-en">Titre anglais :</label> <input type="text" id="titre-en" name="titre-en" maxlength="500" value="<?php echo $titreValEn ?>"></p>
-            <p><label for="desc-en">Descriptif anglais :</label> <textarea id="desc-en" name="desc-en" maxlength="1000"><?php echo $descValEn ?></textarea></p>
-
-            <p><label for="titre-zh">Titre chinois :</label> <input type="text" id="titre-zh" name="titre-zh" maxlength="500" value="<?php echo $titreValZh ?>"></p>
-            <p><label for="desc">Descriptif chinois :</label> <textarea id="desc-zh" name="desc-zh" maxlength="1000"><?php echo $descValZh ?></textarea></p>
-
-            <p><label for="debut">Date début* :</label> <input type="date" id="debut" name="debut" value="<?php echo $debutVal ?>"></p>
-            <p><label for="fin">Date fin* :</label> <input type="date" id="fin" name="fin" value="<?php echo $finVal ?>"></p>
-
+            <div class="box">
+              <p><label for="titre">Titre* :</label> <input type="text" id="titre" name="titre" maxlength="500" value="<?php echo $titreVal ?>"></p>
+              <p><label for="titre-en">Titre anglais :</label> <input type="text" id="titre-en" name="titre-en" maxlength="500" value="<?php echo $titreValEn ?>"></p>
+              <p><label for="titre-zh">Titre chinois :</label> <input type="text" id="titre-zh" name="titre-zh" maxlength="500" value="<?php echo $titreValZh ?>"></p>
+            </div>
+            <div class="box">
+              <p><label for="desc">Descriptif* :</label> <textarea id="desc" name="desc" maxlength="1000"><?php echo $descVal ?></textarea></p>
+              <p><label for="desc-en">Descriptif anglais :</label> <textarea id="desc-en" name="desc-en" maxlength="1000"><?php echo $descValEn ?></textarea></p>
+              <p><label for="desc">Descriptif chinois :</label> <textarea id="desc-zh" name="desc-zh" maxlength="1000"><?php echo $descValZh ?></textarea></p>
+            </div>
+            <div class="box">
+              <p><label for="debut">Date début* :</label> <input type="date" id="debut" name="debut" value="<?php echo $debutVal ?>"></p>
+              <p><label for="fin">Date fin* :</label> <input type="date" id="fin" name="fin" value="<?php echo $finVal ?>"></p>
+            </div>          
             <p>
               <input type="submit" name="expo1" id="expo1" value="Valider étape 1">
               <input type="submit" name="expo1-reset" id="expo1-reset" value="Annuler">

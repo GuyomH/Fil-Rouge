@@ -250,6 +250,17 @@ table#expo-emp td
   text-align: center;
   padding: 0.5rem;
 }
+
+.box
+{
+  display: flex;
+}
+
+.box p
+{
+  margin-right: 1.5rem;
+}
+
 /* FORM / Fin */
 
 table.list-collab
