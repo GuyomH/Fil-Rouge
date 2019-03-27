@@ -173,6 +173,10 @@ if(isset($_POST['art1']))
       exit();
     }
   } else {
+    unset($_SESSION['loadedArt']);
+    unset($_SESSION['loadedArtColl']);
+    unset($_SESSION['currentArt']);
+    unset($_SESSION['nomCurrentArt']);
     $warning = "<p class=\"warning\">Les champs obligatoires ne sont pas correctement remplis !</p>";
   }
 }

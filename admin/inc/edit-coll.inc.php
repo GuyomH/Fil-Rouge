@@ -136,6 +136,9 @@ if(isset($_POST['coll1']))
       exit();
     }
   } else {
+    unset($_SESSION['loadedColl']);
+    unset($_SESSION['currentColl']);
+    unset($_SESSION['nomCurrentColl']);
     $warning = "<p class=\"warning\">Les champs obligatoires ne sont pas correctement remplis !</p>";
   }
 }

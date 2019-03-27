@@ -49,8 +49,8 @@ require_once('inc/edit-artiste.inc.php');
           <p><label for="bio">Bio artiste* :</label> <textarea id="bio" name="bio" maxlength="1000"><?php echo $bioVal ?></textarea></p>
           <p><label for="bind-coll">Lier à un collectif :</label>
           <select name="bind-coll" id="bind-coll">
-            <option hidden value=\"\">Choisir un collectif</option>
-            <option value=\"0\">-</option>
+            <option hidden value="">Choisir un collectif</option>
+            <option value="0">-</option>
 <?php echo $listColl; ?>
           </select>
           </p>
