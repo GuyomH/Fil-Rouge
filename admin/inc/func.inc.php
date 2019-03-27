@@ -1,6 +1,6 @@
 <?php
 // IP réelle + port (via ipconfig)
-$ip = "192.168.56.1:80";
+$ip = "10.22.0.45:80";
 
 // Formatage de la date en français
 function frenchDate($date)
