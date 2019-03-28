@@ -87,6 +87,13 @@ foreach ($qry0b as $coll)
 }
 
 // ÉTAPE 1
+// Auto reset
+if(isset($_SESSION['loadedArt']) && !isset($_SESSION['currentArt']))
+{
+  unset($_SESSION['loadedArt']);
+  unset($_SESSION['loadedArtColl']);
+}
+
 // Reset
 if(isset($_POST['art1-reset']))
 {

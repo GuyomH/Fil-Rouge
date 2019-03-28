@@ -95,7 +95,12 @@ switch (basename($_SERVER['PHP_SELF']))
     }
     break;
   case 'editer-oeuvre.php':
-    $title = $hTitle = "ÉDITER / CRÉER UNE OEUVRE";
+    if(isset($_SESSION['loadedOvr']) || (isset($_POST['select-ovr']) && ($_POST['select-ovr'] > 0)))
+    {
+      $title = $hTitle = "ÉDITER UNE OEUVRE";
+    } else {
+      $title = $hTitle = "CRÉER UNE OEUVRE";
+    }
     break;
   case 'editer-artiste.php':
     if(isset($_SESSION['loadedArt']) || (isset($_POST['select-art']) && ($_POST['select-art'] > 0)))

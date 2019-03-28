@@ -59,6 +59,12 @@ if(isset($_POST['select-coll']) && intval($_POST['select-coll']) > 0)
 }
 
 // ÉTAPE 1
+// Auto reset
+if(isset($_SESSION['loadedColl']) && !isset($_SESSION['currentColl']))
+{
+  unset($_SESSION['loadedColl']);
+}
+
 // Reset
 if(isset($_POST['coll1-reset']))
 {

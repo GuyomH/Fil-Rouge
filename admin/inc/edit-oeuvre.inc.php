@@ -141,6 +141,13 @@ foreach ($qry0t as $art)
 }
 
 // ÉTAPE 1
+// Auto reset
+if(isset($_SESSION['loadedOvr']) && !isset($_SESSION['currentOvr']))
+{
+  unset($_SESSION['loadedOvr']);
+  unset($_SESSION['loadedOvrArt']);
+}
+
 // Reset
 if(isset($_POST['ovr1-reset']))
 {
@@ -218,8 +225,8 @@ if(isset($_POST['ovr1']))
     }
     catch (Exception $e)
     {
-      //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-      $warning = "<p class=\"warning\">$e</p>";
+      $warning = "<p class=\"warning\">Une erreur est survenue !</p>";
+      //$warning = "<p class=\"warning\">$e</p>";
     }
 
     // Récupération de l'ID et du titre
@@ -263,8 +270,7 @@ if(isset($_POST['ovr1']))
           $qry3->bindValue(':pic', $lastID2, PDO::PARAM_INT);
           $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
           try { $qry3->execute(); }
-          catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-          $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           break;
         case '3D':
           $sql2 = "INSERT INTO trois_dimensions(longueur_tri, largeur_tri, hauteur_tri)
@@ -274,8 +280,7 @@ if(isset($_POST['ovr1']))
           $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
           $qry2->bindValue(':largeur', $largeur, PDO::PARAM_STR);
           try { $qry2->execute(); }
-          catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-          $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           $lastID2 = $db->lastInsertId();
           $sql3 = "UPDATE avoir
           SET id_pic = 1,
@@ -286,7 +291,7 @@ if(isset($_POST['ovr1']))
           $qry3->bindValue(':tri', $lastID2, PDO::PARAM_INT);
           $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
           try { $qry3->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           break;
         default: // 0D
           $sql3 = "UPDATE avoir
@@ -297,7 +302,7 @@ if(isset($_POST['ovr1']))
           $qry3 = $db->prepare($sql3);
           $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
           try { $qry3->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           break;
       }
     } else {
@@ -319,8 +324,7 @@ if(isset($_POST['ovr1']))
           $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
           $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
           try { $qry2->execute(); }
-          catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-          $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           $lastID2 = $db->lastInsertId();
           if(!empty($_SESSION['loadedOvr2D']))
           {
@@ -339,8 +343,7 @@ if(isset($_POST['ovr1']))
           $qry3->bindValue(':pic', $lastID2, PDO::PARAM_INT);
           $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
           try { $qry3->execute(); }
-          catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-          $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           break;
         case '3D':
           if(!empty($_SESSION['loadedOvr3D']))
@@ -359,8 +362,7 @@ if(isset($_POST['ovr1']))
           $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
           $qry2->bindValue(':largeur', $largeur, PDO::PARAM_STR);
           try { $qry2->execute(); }
-          catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-          $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           $lastID2 = $db->lastInsertId();
           if(!empty($_SESSION['loadedOvr2D']))
           {
@@ -403,8 +405,6 @@ if(isset($_POST['ovr1']))
       }
     }
 
-
-
     // Insertion des données en anglais et en chinois avec prise en compte de la MAJ
     $sql4 = "INSERT INTO oeuvres_trad(titre_oeuvre_trad, descriptif_oeuvre_trad, id_langue, id_oeuvre)
     VALUES(:titre_en, :desc_en, 1, :id_oeuvre), (:titre_zh, :desc_zh, 2, :id_oeuvre)
@@ -420,8 +420,8 @@ if(isset($_POST['ovr1']))
     try
     {
       $qry4->execute();
-      // header('Location: editer-oeuvre.php');
-      // exit();
+      header('Location: editer-oeuvre.php');
+      exit();
     }
     catch (Exception $e)
     {
@@ -442,27 +442,115 @@ if(isset($_POST['ovr1']))
   }
 }
 
-// // ÉTAPE 2
+// ÉTAPE 2
+// Traitement notifications
+if(isset($_GET['status']))
+{
+  switch ($_GET['status'])
+  {
+    case 'upload':
+      $warning = "<p class=\"warning\">Transmission du fichier réussie !</p>\r\n";
+      break;
+    case 'delete':
+      $warning = "<p class=\"warning\">Supression du fichier réussie !</p>\r\n";
+      break;
+    default:
+      break;
+  }
+}
+
 // Reset
 if(isset($_POST['coll2-reset']))
 {
   // Destruction des variables de session
   unset($_SESSION['loadedOvr']);
   unset($_SESSION['loadedOvrArt']);
+  unset($_SESSION['loadedOvr2D']);
+  unset($_SESSION['loadedOvr3D']);
+  unset($_SESSION['loadedOvrCat']);
+  unset($_SESSION['loadedOvrLib']);
   unset($_SESSION['currentOvr']);
   unset($_SESSION['nomCurrentOvr']);
   header('Location: editer-oeuvre.php');
   exit();
 }
 
-// // Delete média (type unique : jpg)
-// if(isset($_POST['del']) && intval($_POST['del']) > 0)
-// {
-//     $path = substr_replace((__dir__), "", -10);
-//     unlink($path."/artistes/".$_POST['del'].".jpg");
-//     $warning = "<p class=\"warning\">Supression du fichier réussie !</p>";
-// }
-//
-// // Fichier de traitement de l'upload
-// require_once('inc/upload-art.inc.php');
+if(isset($_SESSION['currentOvr']))
+{
+  // Chargement des médias
+  $listMedia = ""; // Var init
+  $sql5 = "SELECT nom_media, A.id_media, type_media
+  FROM medias AS M
+  INNER JOIN accompagner AS A ON M.id_media = A.id_media
+  WHERE A.id_oeuvre = {$_SESSION['currentOvr']}
+  ORDER BY type_media;";
+  $qry5 = $db->query($sql5);
+
+  foreach ($qry5 as $media)
+  {
+    switch ($media['type_media']) {
+      case 'son':
+      $listMedia .= "\t\t<div class=\"upload-preview\">\r
+         <figure>\r
+          \t<figcaption>{$media['nom_media']}</figcaption>\r
+          \t<audio controls src=\"../media/{$_SESSION['currentOvr']}/{$media['nom_media']}\">\r
+            \tYour browser does not support the <code>audio</code> element.\r
+          \t</audio>\r
+         </figure>\r
+         <form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">\r
+           \t<input type=\"hidden\" name=\"del\" value=\"{$media['nom_media']}\">\r
+           \t<input type=\"hidden\" name=\"del2\" value=\"{$media['id_media']}\">\r
+           \t<button type=\"submit\"><i class=\"fas fa-trash-alt\"></i></button>\r
+         </form>\r
+      \t</div>\r\n";
+        break;
+
+      case 'video':
+      $listMedia .= "\t\t<div class=\"upload-preview\">\r
+        <video controls width=\"auto\">\r
+          \t<source src=\"../media/{$_SESSION['currentOvr']}/{$media['nom_media']}\" type=\"video/mp4\">\r
+            \tSorry, your browser doesn't support embedded videos.\r
+        </video>\r
+        <form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">\r
+          \t<input type=\"hidden\" name=\"del\" value=\"{$media['nom_media']}\">\r
+          \t<input type=\"hidden\" name=\"del2\" value=\"{$media['id_media']}\">\r
+          \t<button type=\"submit\"><i class=\"fas fa-trash-alt\"></i></button>\r
+        </form>\r
+     \t</div>\r\n";
+        break;
+
+      default: // image
+        $listMedia .= "\t\t<div class=\"upload-preview\">\r
+           \t<img src=\"../media/{$_SESSION['currentOvr']}/{$media['nom_media']}\" alt=\"media\">\r
+           \t<form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">\r
+             \t<input type=\"hidden\" name=\"del\" value=\"{$media['nom_media']}\">\r
+             \t<input type=\"hidden\" name=\"del2\" value=\"{$media['id_media']}\">\r
+             \t<button type=\"submit\"><i class=\"fas fa-trash-alt\"></i></button>\r
+           \t</form>\r
+        </div>\r\n";
+        break;
+    }
+  }
+}
+
+// Delete média
+if(isset($_POST['del']) && !empty($_POST['del']))
+{
+  // Suppresion dans la DB
+  $sql6 = "DELETE FROM accompagner WHERE id_media = {$_POST['del2']}";
+  $qry6 = $db->exec($sql6);
+  $sql6b = "DELETE FROM medias WHERE id_media = {$_POST['del2']}";
+  $qry6b = $db->exec($sql6b);
+
+  // Suppresion du fichier
+  $path = substr_replace((__dir__), "", -10);
+  unlink($path."/media/".$_SESSION['currentOvr']."/".$_POST['del']);
+
+  // REdirection
+  header('Location: editer-oeuvre.php?status=delete');
+  exit();
+}
+
+// Fichier de traitement de l'upload
+require_once('inc/upload-ovr.inc.php');
 ?>

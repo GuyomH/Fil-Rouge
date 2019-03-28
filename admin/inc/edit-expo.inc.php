@@ -200,7 +200,7 @@ $sql = "SELECT * FROM emplacements;";
 $qry = $db->query($sql);
 foreach ($qry as $val)
 {
-  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden value=\"\">Choisir</option>\r\n\t\t\t\t\t<option value=\"\">-</option>\r\n";
+  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden value=\"\">Choisir</option>\r\n\t\t\t\t\t<option value=\"0\">-</option>\r\n";
 
   // Récupération de l'oeuvre lié à l'emplacement
   $sqlOvr = "SELECT O.id_oeuvre, C.livraison_oeuvre
@@ -325,8 +325,8 @@ if(isset($_POST['expo2']))
 
   // Création de la requête / part fin
   $sql6 = substr($sql6, 0, -3); // supprime ",\r\n" en fin de chaîne
-  $sql6 .= " ON DUPLICATE KEY UPDATE id_oeuvre = values(id_oeuvre),
-  livraison_oeuvre = values(livraison_oeuvre);";
+  $sql6 .= " ON DUPLICATE KEY UPDATE id_oeuvre = VALUES(id_oeuvre),
+  livraison_oeuvre = VALUES(livraison_oeuvre);";
 
   try
   {

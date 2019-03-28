@@ -73,9 +73,6 @@ require_once('inc/edit-oeuvre.inc.php');
 <?php echo $listArt; ?>
           </select>
           </p>
-
-
-
           <p>
             <input type="submit" name="ovr1" id="ovr1" value="<?php echo $submitVal ?>">
             <input type="submit" name="ovr1-reset" id="ovr1-reset" value="Annuler">
@@ -90,26 +87,17 @@ require_once('inc/edit-oeuvre.inc.php');
 
         <?php echo $warning; ?>
 
-        <!-- <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
           <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $size; ?>">
         <p>
-          <input type="file" name="fichier" accept=".jpg">
+          <input type="file" name="fichier" accept=".jpg,.mp4,.mp3">
           <input type="submit" name="upload" value="Envoyer le fichier" class="upload-submit">
         </p>
-        </form> -->
+        </form>
 
-        <!-- <?php
-        if(file_exists("../artistes/".$_SESSION['currentArt'].".jpg"))
-        {
-          echo "<div class=\"upload-preview\">
-          <img src=\"../artistes/{$_SESSION['currentArt']}.jpg\" alt=\"photo de l'artiste\">
-          <form method=\"post\" action=\"{$_SERVER['PHP_SELF']}\">
-            <input type=\"hidden\" name=\"del\" value=\"{$_SESSION['currentArt']}\">
-            <button type=\"submit\"><i class=\"fas fa-trash-alt\"></i></button>
-          </form>
-        </div>\r\n";
-        }
-        ?> -->
+        <div id="box">
+<?php echo $listMedia; ?>
+        </div>
 
         <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="wide">
           <p><input type="submit" name="coll2-reset" id="coll1-reset" value="Terminer"></p>

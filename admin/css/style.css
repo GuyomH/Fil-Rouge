@@ -126,7 +126,7 @@ content: "► ";
 
 header, main
 {
-  width: 960px;
+  width: 100%;
   margin: 0 20px;
 }
 
@@ -261,6 +261,14 @@ table#expo-emp td
   margin-right: 1.5rem;
 }
 
+@media screen and (min-width: 320px)and (max-width: 1100px)
+{
+ .box
+ {
+   display: inherit;
+ }
+}
+
 /* FORM / Fin */
 
 table.list-collab
@@ -294,7 +302,24 @@ table.list-collab , .list-collab th , .list-collab td
 {
   width: 450px;
   position: relative;
-  margin: 1rem 0;
+  margin: 2rem 0;
+}
+
+.upload-preview video
+{
+  width: 450px;
+}
+
+.upload-preview audio
+{
+  width: 350px;
+}
+
+.upload-preview figcaption
+{
+  padding-left: 1.5rem;
+  color: #BF0F3D;
+  font-weight: bold;
 }
 
 button[type="submit"]

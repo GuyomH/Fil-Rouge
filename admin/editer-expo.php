@@ -58,7 +58,7 @@ if(isset($_SESSION['editExpo']))
             <div class="box">
               <p><label for="debut">Date début* :</label> <input type="date" id="debut" name="debut" value="<?php echo $debutVal ?>"></p>
               <p><label for="fin">Date fin* :</label> <input type="date" id="fin" name="fin" value="<?php echo $finVal ?>"></p>
-            </div>          
+            </div>
             <p>
               <input type="submit" name="expo1" id="expo1" value="Valider étape 1">
               <input type="submit" name="expo1-reset" id="expo1-reset" value="Annuler">
