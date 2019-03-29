@@ -145,7 +145,7 @@ if (isset($_POST['editerCollaborateur']))
     }
     catch (Exception $e)
     {
-      $warning = "<p class='warning'>Une erreur est survenue !</p>";
+      $warning = "<p class='warning'>Une erreur est survenue !<br>Vérifiez si le trigramme n'est pas déjà attribué !</p>";
       //$warning = "<p class='warning'>{$e}</p>";
     }
   } else {
@@ -160,8 +160,8 @@ if (isset($_POST['editerCollaborateur']))
   <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" class="wide">
     <p><label for="nom">Nom* :</label> <input type="text" id="nom" name="nom" maxlength="100" value="<?php echo $nom ?>"></p>
     <p><label for="prenom">Prénom* :</label> <input type="text" id="prenom" name="prenom" maxlength="100" value="<?php echo $prenom ?>"></p>
-    <p><label for="email">Email :</label> <input type="text" id="email" name="email" maxlength="100" value="<?php echo $email ?>"></p>
-    <p><label for="trigramme">Trigramme :</label> <input type="text" id="trigramme" name="trigramme" maxlength="3" value="<?php echo $trigramme ?>"></p>
+    <p><label for="email">Email* :</label> <input type="text" id="email" name="email" maxlength="100" value="<?php echo $email ?>"></p>
+    <p><label for="trigramme">Trigramme* :</label> <input type="text" id="trigramme" name="trigramme" maxlength="3" value="<?php echo $trigramme ?>"></p>
 
 
 <?php if(isset($_GET['collab']) || isset($_SESSION['collab'])){ ?>

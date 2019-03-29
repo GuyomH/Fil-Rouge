@@ -200,7 +200,7 @@ $sql = "SELECT * FROM emplacements;";
 $qry = $db->query($sql);
 foreach ($qry as $val)
 {
-  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden value=\"\">Choisir</option>\r\n\t\t\t\t\t<option value=\"0\">-</option>\r\n";
+  $empTab .= "\t\t\t\t<tr><td><label for=\"emp{$val['num_emp']}\">{$val['num_emp']}</label></td><td><select name=\"emp{$val['num_emp']}\" id=\"emp{$val['num_emp']}\">\r\n\t\t\t\t\t<option hidden value=\"\">Choisir</option>\r\n\t\t\t\t\t<option value=\"\">-</option>\r\n";
 
   // Récupération de l'oeuvre lié à l'emplacement
   $sqlOvr = "SELECT O.id_oeuvre, C.livraison_oeuvre
@@ -291,63 +291,66 @@ if(isset($_POST['expo2']))
     $emplacement[] = $emp['num_emp'];
   }
 
-  // Création de la requête / part 1
-  $sql6 = "INSERT INTO composer (livraison_oeuvre, id_oeuvre, id_expo, num_emp)\r\nVALUES ";
+  //Création de la requête
+  $id = $_SESSION['editExpo'];
 
   // Vérif des variables
   foreach ($emplacement as $numEmp)
   {
     if(!empty($_POST['emp'.$numEmp]))
     {
+    // UPDATE
       // Variables dynamiques
-      $var = 'emp'.$numEmp;
-      $var2 = 'date'.$numEmp;
+      $var = 'emp'.$numEmp; // ex :  emp1-01
+      $var2 = 'date'.$numEmp; // ex : date1-01
 
-      if(!empty($_POST['emp'.$numEmp]))
-      {
-        ${$var} = intval($_POST['emp'.$numEmp]);
-      } else {
-        ${$var} = "NULL";
-      }
+      ${$var} = intval($_POST['emp'.$numEmp]);
 
       if(!empty($_POST['date'.$numEmp]) && !empty($_POST['emp'.$numEmp]))
       {
-        ${$var2} = $db->quote($_POST['date'.$numEmp]);
+        ${$var2} = $db->quote($_POST['date'.$numEmp]); // ex: $date1-01 = $_POST['date1-01']
       } else {
         ${$var2} = "NULL";
       }
 
-      $id = $_SESSION['editExpo'];
+      // On teste si la ligne est vide (vide INSERT, remplie UPDATE)
+      // On peut remplacer cette approche par la génération d'un tableau d'état du remplissage des emplacements au chargement de la page
+      $sqlChk = "SELECT COUNT(*) AS nb
+                 FROM composer
+                 WHERE id_expo = {$id}
+                 AND num_emp = '{$numEmp}';";
+      $qryChk = $db->query($sqlChk);
+      $resChk = $qryChk->fetch();
 
-      $sql6 .= "(".${$var2}.", ".${$var}.", ".$id.", '".$numEmp."'),\r\n";
+      if($resChk['nb'] > 0)
+      {
+        $sqlUpdate = "UPDATE composer
+                      SET livraison_oeuvre = ".${$var2}.",
+                      id_oeuvre = ".${$var}."
+                      WHERE id_expo = {$id}
+                      AND num_emp = '{$numEmp}';";
+        $qryUpdate = $db->exec($sqlUpdate);
+      } else {
+        $sqlUpdate = "INSERT INTO composer (livraison_oeuvre, id_oeuvre, id_expo, num_emp)
+                      VALUES(".${$var2}.", ".${$var}.", {$id}, '{$numEmp}');";
+        $qryUpdate = $db->exec($sqlUpdate);
+      }
+    } else {
+    // DELETE
+      $sqlDelete = "DELETE FROM composer
+                    WHERE id_expo = {$id}
+                    AND num_emp = '{$numEmp}';";
+      $qryDelete = $db->exec($sqlDelete);
     }
   }
 
-  // Création de la requête / part fin
-  $sql6 = substr($sql6, 0, -3); // supprime ",\r\n" en fin de chaîne
-  $sql6 .= " ON DUPLICATE KEY UPDATE id_oeuvre = VALUES(id_oeuvre),
-  livraison_oeuvre = VALUES(livraison_oeuvre);";
-
-  try
-  {
-    $qry6 = $db->exec($sql6);
-    unset($_SESSION['currentExpo']);
-    unset($_SESSION['titreCurrentExpo']);
-    unset($_SESSION['debut_org']);
-    unset($_SESSION['fin_org']);
-    unset($_SESSION['editExpo']);
-    header('Location: editer-expo.php?return=true');
-    exit();
-  }
-  catch (Exception $e)
-  {
-    unset($_SESSION['currentExpo']);
-    unset($_SESSION['titreCurrentExpo']);
-    unset($_SESSION['debut_org']);
-    unset($_SESSION['fin_org']);
-    unset($_SESSION['editExpo']);
-    header('Location: editer-expo.php?return=false');
-    exit();
-  }
+  //Fin du traitement : nettoyage + redirection
+  unset($_SESSION['currentExpo']);
+  unset($_SESSION['titreCurrentExpo']);
+  unset($_SESSION['debut_org']);
+  unset($_SESSION['fin_org']);
+  unset($_SESSION['editExpo']);
+  header('Location: editer-expo.php?return=true');
+  exit();
 }
 ?>

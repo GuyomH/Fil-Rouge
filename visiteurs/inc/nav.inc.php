@@ -16,10 +16,15 @@ if(stristr($_SERVER['PHP_SELF'], 'index.php'))
   $title="Grand Angle : Visite intéractive";
   $desc="Grand Angle : Visite intéractive";
   $pageName = "visite-interactive";
-} else {
+} elseif (stristr($_SERVER['PHP_SELF'], 'fiche.php')) {
   // Fiche détaillée
   $title="Grand Angle : Fiche détaillée";
   $desc="Grand Angle : Fiche détaillée";
   $pageName = "fiche";
+} else {
+  // 404
+  $title="Grand Angle : Erreur 404";
+  $desc="Grand Angle : Erreur 404";
+  $pageName = "index";
 }
 ?>

@@ -1,0 +1,2 @@
+# ERROR 404
+ErrorDocument 404 http://localhost/php/Fil-Rouge/visiteurs/404.php
