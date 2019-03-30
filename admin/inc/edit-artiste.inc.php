@@ -77,7 +77,7 @@ ORDER BY nom_col;";
 $qry0b = $db->query($sql0b);
 foreach ($qry0b as $coll)
 {
-  if(isset($_SESSION['loadedArtColl']) &&  ($_SESSION['loadedArtColl'] == $coll['id_col']))
+  if(isset($idCollVal) &&  ($idCollVal == $coll['id_col']))
   {
     $selectedColl = " selected";
   } else {
@@ -87,13 +87,6 @@ foreach ($qry0b as $coll)
 }
 
 // ÉTAPE 1
-// Auto reset
-if(isset($_SESSION['loadedArt']) && !isset($_SESSION['currentArt']))
-{
-  unset($_SESSION['loadedArt']);
-  unset($_SESSION['loadedArtColl']);
-}
-
 // Reset
 if(isset($_POST['art1-reset']))
 {

@@ -13,4 +13,28 @@ $( document ).ready(function()
     }
   });
 
+  // function show()
+  // {
+  //  var elem = document.getElementById('show');
+  //  // var attVal = elem.getAttribute('type');
+  //  var attVal=elem.type;
+  //
+  //  var elem2 = document.getElementById('eye');
+  //
+  //
+  //  if(attVal == 'password')
+  //  {
+  //    elem.setAttribute('type', 'text');
+  //    //elem2.setAttribute('class', 'far fa-eye-slash');
+  //    elem2.className = "far fa-eye-slash";
+  //  } else {
+  //    elem.setAttribute('type', 'password');
+  //    elem2.setAttribute('class', 'far fa-eye');
+  //  }
+  // }
+
+  $(".far").click(function(){
+    // TODO
+  });
+
 });

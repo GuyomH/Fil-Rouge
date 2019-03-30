@@ -166,7 +166,7 @@ foreach ($qry as $val)
       $tooBig = ""; // Reset de la variable
     }
 
-  $empTab .= "\t\t\t\t</select></td><td><input type=\"date\" name=\"date{$val['num_emp']}\"></td><td></tr>\r\n";
+  $empTab .= "\t\t\t\t</select></td><td><input type=\"date\" name=\"date{$val['num_emp']}\" id=\"date{$val['num_emp']}\"></td><td></tr>\r\n";
 }
 
 // ÉTAPE 3 / TRAITEMENT

@@ -130,7 +130,7 @@ ORDER BY nom_art;";
 $qry0t = $db->query($sql0t);
 foreach ($qry0t as $art)
 {
-  if(isset($_SESSION['loadedOvrArt']) && ($_SESSION['loadedOvrArt'] == $art['id_art']))
+  if(isset($idArtVal) && ($idArtVal == $art['id_art']))
   {
     $selectedArt = " selected";
   } else {
@@ -138,14 +138,6 @@ foreach ($qry0t as $art)
   }
   $artist = isset($art['prenom_art']) ? $art['nom_art'] . " " . $art['prenom_art'] : $art['nom_art'];
   $listArt .= "\t\t\t<option value=\"{$art['id_art']}\"{$selectedArt}>{$artist}</option>\r\n";
-}
-
-// ÉTAPE 1
-// Auto reset
-if(isset($_SESSION['loadedOvr']) && !isset($_SESSION['currentOvr']))
-{
-  unset($_SESSION['loadedOvr']);
-  unset($_SESSION['loadedOvrArt']);
 }
 
 // Reset
@@ -234,110 +226,199 @@ if(isset($_POST['ovr1']))
     $_SESSION['currentOvr'] = isset($_SESSION['loadedOvr']) ? $_SESSION['loadedOvr'] : $lastID;
     $_SESSION['nomCurrentOvr'] = $titre;
 
-    // Maj du type
-    // Changement de libellé sans changement de type
-    if($_SESSION['loadedOvrCat'] == $catType && $_SESSION['loadedOvrLib'] != $libType)
+    /**********/
+    /* UPDATE */
+    /**********/
+    if(isset($_SESSION['loadedOvr']))
     {
-      $sqlUp1 = "UPDATE avoir
-      SET id_type = :type
-      WHERE id_oeuvre = {$_SESSION['loadedOvr']}";
-      $qryUp1 = $db->prepare($sqlUp1);
-      $qryUp1->bindValue(':type', $idType, PDO::PARAM_INT);
-      $qryUp1->execute();
-    }
-
-    // Changement de libellé avec changement de type
-    if($_SESSION['loadedOvrCat'] != $catType && $_SESSION['loadedOvrLib'] != $libType)
-    {
+      // Changement de libellé avec changement de type
+      // On insère les nouvelles dimensions et on met à jour l'id_type, l'id_pic et l'id_tri dans la table avoir
+      if($_SESSION['loadedOvrCat'] != $catType && $_SESSION['loadedOvrLib'] != $libType)
+      {
+        switch ($catType)
+        {
+          case '2D':
+            $sql2 = "INSERT INTO deux_dimensions(longueur_pic, hauteur_pic)
+                    VALUES(:longueur, :hauteur);";
+            $qry2 = $db->prepare($sql2);
+            $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
+            $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
+            try { $qry2->execute(); }
+            catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
+            $warning = "<p class=\"warning\">$e</p>"; }
+            $lastID2 = $db->lastInsertId();
+            $sql3 = "UPDATE avoir
+            SET id_pic = :pic,
+            id_tri = 1,
+            id_type = :type
+            WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
+            $qry3 = $db->prepare($sql3);
+            $qry3->bindValue(':pic', $lastID2, PDO::PARAM_INT);
+            $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
+            try { $qry3->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            break;
+          case '3D':
+            $sql2 = "INSERT INTO trois_dimensions(longueur_tri, largeur_tri, hauteur_tri)
+                    VALUES(:longueur, :largeur, :hauteur);";
+            $qry2 = $db->prepare($sql2);
+            $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
+            $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
+            $qry2->bindValue(':largeur', $largeur, PDO::PARAM_STR);
+            try { $qry2->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            $lastID2 = $db->lastInsertId();
+            $sql3 = "UPDATE avoir
+            SET id_pic = 1,
+            id_tri = :tri,
+            id_type = :type
+            WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
+            $qry3 = $db->prepare($sql3);
+            $qry3->bindValue(':tri', $lastID2, PDO::PARAM_INT);
+            $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
+            try { $qry3->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            break;
+          default: // 0D
+            $sql3 = "UPDATE avoir
+            SET id_pic = 1,
+            id_tri = 1,
+            id_type = :type
+            WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
+            $qry3 = $db->prepare($sql3);
+            $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
+            try { $qry3->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            break;
+        }
+      } else {
+        // Changement de libellé sans changement de type
+        // On met à jour l'id_type dans la table avoir
+        if($_SESSION['loadedOvrCat'] == $catType && $_SESSION['loadedOvrLib'] != $libType)
+        {
+          $sqlUp1 = "UPDATE avoir
+          SET id_type = :type
+          WHERE id_oeuvre = {$_SESSION['loadedOvr']}";
+          $qryUp1 = $db->prepare($sqlUp1);
+          $qryUp1->bindValue(':type', $idType, PDO::PARAM_INT);
+          $qryUp1->execute();
+        }
+        // Gestion des dimensions
+        switch ($catType)
+        {
+          case '2D':
+            if(!empty($_SESSION['loadedOvr2D']))
+            {
+              $sql2 = "UPDATE deux_dimensions
+              SET longueur_pic = :longueur,
+              hauteur_pic = :hauteur
+              WHERE id_pic = {$_SESSION['loadedOvr2D']};";
+            } else {
+              $sql2 = "INSERT INTO deux_dimensions(longueur_pic, hauteur_pic)
+                      VALUES(:longueur, :hauteur);";
+            }
+            $qry2 = $db->prepare($sql2);
+            $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
+            $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
+            try { $qry2->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            $lastID2 = $db->lastInsertId();
+            if(!empty($_SESSION['loadedOvr2D']))
+            {
+              $sql3 = "UPDATE avoir
+              SET id_oeuvre = :ovr,
+              id_pic = :pic,
+              id_tri = 1,
+              id_type = :type
+              WHERE id_pic = {$_SESSION['loadedOvr2D']};";
+            } else {
+              $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
+                      VALUES(:ovr, :pic, 1, :type);";
+            }
+            $qry3 = $db->prepare($sql3);
+            $qry3->bindValue(':ovr', $_SESSION['currentOvr'], PDO::PARAM_INT);
+            $qry3->bindValue(':pic', $lastID2, PDO::PARAM_INT);
+            $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
+            try { $qry3->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            break;
+          case '3D':
+            if(!empty($_SESSION['loadedOvr3D']))
+            {
+              $sql2 = "UPDATE trois_dimensions
+              SET longueur_tri = :longueur,
+              largeur_tri = :largeur,
+              hauteur_tri = :hauteur
+              WHERE id_tri = {$_SESSION['loadedOvr3D']};";
+            } else {
+              $sql2 = "INSERT INTO trois_dimensions(longueur_tri, largeur_tri, hauteur_tri)
+                      VALUES(:longueur, :largeur, :hauteur);";
+            }
+            $qry2 = $db->prepare($sql2);
+            $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
+            $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
+            $qry2->bindValue(':largeur', $largeur, PDO::PARAM_STR);
+            try { $qry2->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
+            $lastID2 = $db->lastInsertId();
+            if(!empty($_SESSION['loadedOvr2D']))
+            {
+              $sql3 = "UPDATE avoir
+              SET id_oeuvre = :ovr,
+              id_pic = 1,
+              id_tri = :tri,
+              id_type = :type
+              WHERE id_tri = {$_SESSION['loadedOvr3D']};";
+            } else {
+              $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
+                      VALUES(:ovr, 1, :tri, :type);";
+            }
+            $qry3 = $db->prepare($sql3);
+            $qry3->bindValue(':ovr', $_SESSION['currentOvr'], PDO::PARAM_INT);
+            $qry3->bindValue(':tri', $lastID2, PDO::PARAM_INT);
+            $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
+            try { $qry3->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">$e</p>"; }
+            break;
+          default: // 0D
+            if(isset($_SESSION['loadedOvr']))
+            {
+              $sql3 = "UPDATE avoir
+              SET id_oeuvre = :ovr,
+              id_pic = 1,
+              id_tri = 1,
+              id_type = :type
+              WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
+            } else {
+              $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
+                      VALUES(:ovr, 1, 1, :type);";
+            }
+            $qry3 = $db->prepare($sql3);
+            $qry3->bindValue(':ovr', $_SESSION['currentOvr'], PDO::PARAM_INT);
+            $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
+            try { $qry3->execute(); }
+            catch (Exception $e) { $warning = "<p class=\"warning\">$e</p>"; }
+            break;
+        }
+      }
+    /**********/
+    /* INSERT */
+    /**********/
+    } else {
+      // Insertion des dimensions
       switch ($catType)
       {
         case '2D':
           $sql2 = "INSERT INTO deux_dimensions(longueur_pic, hauteur_pic)
-                  VALUES(:longueur, :hauteur);";
+                   VALUES(:longueur, :hauteur);";
           $qry2 = $db->prepare($sql2);
           $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
           $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
           try { $qry2->execute(); }
-          catch (Exception $e) { //$warning = "<p class=\"warning\">Une erreur est survenue !</p>";
-          $warning = "<p class=\"warning\">$e</p>"; }
+          catch (Exception $e) { $warning = "<p class=\"warning\">$e</p>"; }
           $lastID2 = $db->lastInsertId();
-          $sql3 = "UPDATE avoir
-          SET id_pic = :pic,
-          id_tri = 1,
-          id_type = :type
-          WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
-          $qry3 = $db->prepare($sql3);
-          $qry3->bindValue(':pic', $lastID2, PDO::PARAM_INT);
-          $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
-          try { $qry3->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
-          break;
-        case '3D':
-          $sql2 = "INSERT INTO trois_dimensions(longueur_tri, largeur_tri, hauteur_tri)
-                  VALUES(:longueur, :largeur, :hauteur);";
-          $qry2 = $db->prepare($sql2);
-          $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
-          $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
-          $qry2->bindValue(':largeur', $largeur, PDO::PARAM_STR);
-          try { $qry2->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
-          $lastID2 = $db->lastInsertId();
-          $sql3 = "UPDATE avoir
-          SET id_pic = 1,
-          id_tri = :tri,
-          id_type = :type
-          WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
-          $qry3 = $db->prepare($sql3);
-          $qry3->bindValue(':tri', $lastID2, PDO::PARAM_INT);
-          $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
-          try { $qry3->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
-          break;
-        default: // 0D
-          $sql3 = "UPDATE avoir
-          SET id_pic = 1,
-          id_tri = 1,
-          id_type = :type
-          WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
-          $qry3 = $db->prepare($sql3);
-          $qry3->bindValue(':type', $idType, PDO::PARAM_INT);
-          try { $qry3->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
-          break;
-      }
-    } else {
-      // Cas standard, update simple
-      switch ($catType)
-      {
-        case '2D':
-          if(!empty($_SESSION['loadedOvr2D']))
-          {
-            $sql2 = "UPDATE deux_dimensions
-            SET longueur_pic = :longueur,
-            hauteur_pic = :hauteur
-            WHERE id_pic = {$_SESSION['loadedOvr2D']};";
-          } else {
-            $sql2 = "INSERT INTO deux_dimensions(longueur_pic, hauteur_pic)
-                    VALUES(:longueur, :hauteur);";
-          }
-          $qry2 = $db->prepare($sql2);
-          $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
-          $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
-          try { $qry2->execute(); }
-          catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
-          $lastID2 = $db->lastInsertId();
-          if(!empty($_SESSION['loadedOvr2D']))
-          {
-            $sql3 = "UPDATE avoir
-            SET id_oeuvre = :ovr,
-            id_pic = :pic,
-            id_tri = 1,
-            id_type = :type
-            WHERE id_pic = {$_SESSION['loadedOvr2D']};";
-          } else {
-            $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
-                    VALUES(:ovr, :pic, 1, :type);";
-          }
+          $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
+                   VALUES(:ovr, :pic, 1, :type);";
           $qry3 = $db->prepare($sql3);
           $qry3->bindValue(':ovr', $_SESSION['currentOvr'], PDO::PARAM_INT);
           $qry3->bindValue(':pic', $lastID2, PDO::PARAM_INT);
@@ -346,17 +427,8 @@ if(isset($_POST['ovr1']))
           catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           break;
         case '3D':
-          if(!empty($_SESSION['loadedOvr3D']))
-          {
-            $sql2 = "UPDATE trois_dimensions
-            SET longueur_tri = :longueur,
-            largeur_tri = :largeur,
-            hauteur_tri = :hauteur
-            WHERE id_tri = {$_SESSION['loadedOvr3D']};";
-          } else {
-            $sql2 = "INSERT INTO trois_dimensions(longueur_tri, largeur_tri, hauteur_tri)
-                    VALUES(:longueur, :largeur, :hauteur);";
-          }
+          $sql2 = "INSERT INTO trois_dimensions(longueur_tri, largeur_tri, hauteur_tri)
+                   VALUES(:longueur, :largeur, :hauteur);";
           $qry2 = $db->prepare($sql2);
           $qry2->bindValue(':longueur', $longueur, PDO::PARAM_STR);
           $qry2->bindValue(':hauteur', $hauteur, PDO::PARAM_STR);
@@ -364,18 +436,8 @@ if(isset($_POST['ovr1']))
           try { $qry2->execute(); }
           catch (Exception $e) { $warning = "<p class=\"warning\">Une erreur est survenue !</p>"; }
           $lastID2 = $db->lastInsertId();
-          if(!empty($_SESSION['loadedOvr2D']))
-          {
-            $sql3 = "UPDATE avoir
-            SET id_oeuvre = :ovr,
-            id_pic = 1,
-            id_tri = :tri,
-            id_type = :type
-            WHERE id_tri = {$_SESSION['loadedOvr3D']};";
-          } else {
-            $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
-                    VALUES(:ovr, 1, :tri, :type);";
-          }
+          $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
+                   VALUES(:ovr, 1, :tri, :type);";
           $qry3 = $db->prepare($sql3);
           $qry3->bindValue(':ovr', $_SESSION['currentOvr'], PDO::PARAM_INT);
           $qry3->bindValue(':tri', $lastID2, PDO::PARAM_INT);
@@ -384,18 +446,8 @@ if(isset($_POST['ovr1']))
           catch (Exception $e) { $warning = "<p class=\"warning\">$e</p>"; }
           break;
         default: // 0D
-          if(isset($_SESSION['loadedOvr']))
-          {
-            $sql3 = "UPDATE avoir
-            SET id_oeuvre = :ovr,
-            id_pic = 1,
-            id_tri = 1,
-            id_type = :type
-            WHERE id_oeuvre = {$_SESSION['loadedOvr']};";
-          } else {
-            $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
-                    VALUES(:ovr, 1, 1, :type);";
-          }
+          $sql3 = "INSERT INTO avoir(id_oeuvre, id_pic, id_tri, id_type)
+                   VALUES(:ovr, 1, 1, :type);";
           $qry3 = $db->prepare($sql3);
           $qry3->bindValue(':ovr', $_SESSION['currentOvr'], PDO::PARAM_INT);
           $qry3->bindValue(':type', $idType, PDO::PARAM_INT);

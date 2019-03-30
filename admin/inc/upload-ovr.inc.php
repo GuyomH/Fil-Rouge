@@ -42,6 +42,7 @@ function sanitize($fichier)
 $baseSize = 1048576; // 1 MO
 $multiplier = 2;
 $size = intval($baseSize * $multiplier);
+$sizeMo = round($size / 1000000);
 
 if(isset($_POST['upload']))
 {

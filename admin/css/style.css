@@ -251,6 +251,16 @@ table#expo-emp td
   padding: 0.5rem;
 }
 
+/* input[type="date"][value*="-"]
+{
+  border-width: 4px;
+}
+
+select[value="choisir"]
+{
+  border-width: 4px;
+} */
+
 .box
 {
   display: flex;
@@ -268,7 +278,6 @@ table#expo-emp td
    display: inherit;
  }
 }
-
 /* FORM / Fin */
 
 table.list-collab
