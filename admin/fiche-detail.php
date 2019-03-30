@@ -46,9 +46,21 @@ $listing = "\t\t\t<ul id=\"prog\">\r\n";
 $qry = $db->query($sql);
 foreach ($qry as $val)
 {
+  // Récupération de l'image
+  $sql2 = "SELECT nom_media FROM medias AS M
+           INNER JOIN accompagner AS A ON M.id_media = A.id_media
+           WHERE id_oeuvre = {$val['id_oeuvre']}
+           AND type_media = 'image'
+           LIMIT 1;";
+  $qry2 = $db->query($sql2);
+  $image = $qry2->fetch();
+  // Affichage des éléments
   $url = urlEncode($baseUrl."fiche.php?id=".$val['id_oeuvre']);
-  $listing .= "\t\t\t\t<li><h3>{$val['num_emp']} : {$val['titre_oeuvre']}</h3>
-  <img src=\"https://api.qrserver.com/v1/create-qr-code/?data={$url}&amp;format=svg\" alt=\"\" title=\"\" /></li>\r\n";
+  $listing .= "\t\t\t\t<li>
+  \t\t\t\t\t<h3>{$val['num_emp']} : {$val['titre_oeuvre']}</h3>
+  \t\t\t\t\t<img src=\"https://api.qrserver.com/v1/create-qr-code/?data={$url}&amp;format=svg\" alt=\"QR CODE\" />
+  \t\t\t\t\t<img src=\"../media/{$val['id_oeuvre']}/{$image['nom_media']}\" alt=\"\" />
+  \t\t\t\t</li>\r\n";
 }
 $listing .= "\t\t\t</ul>\r\n";
 $debut = frenchDate($val['debut_expo']);

@@ -134,7 +134,7 @@ $sql_fr = [
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
   ORDER BY EMP.num_emp;",
 
-  "fiche_detail"=>"SELECT O.id_oeuvre, A.id_art, COL.id_col, titre_oeuvre, descriptif_oeuvre, nom_art, prenom_art, bio_art, nom_col, info_col
+  "fiche_detail"=>"SELECT DISTINCT O.id_oeuvre, A.id_art, COL.id_col, titre_oeuvre, descriptif_oeuvre, nom_art, prenom_art, bio_art, nom_col, info_col
   FROM oeuvres AS O
   INNER JOIN artistes AS A ON A.id_art = O.id_art
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
@@ -142,13 +142,14 @@ $sql_fr = [
   INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
   WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo;",
 
-  "media"=>"SELECT nom_media, type_media, E.id_expo
+  "media"=>"SELECT DISTINCT nom_media, type_media, O.id_oeuvre, E.id_expo
   FROM medias AS M
   INNER JOIN accompagner AS AC ON AC.id_media = M.id_media
   INNER JOIN oeuvres AS O ON AC.id_oeuvre = O.id_oeuvre
   INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
   INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
-  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo;"
+  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo
+  ORDER BY type_media;"
 ];
 
 $sql_en = [
@@ -184,7 +185,7 @@ $sql_en = [
   AND (code_langue = 'en')
   ORDER BY EMP.num_emp;",
 
-  "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
+  "fiche_detail"=>"SELECT DISTINCT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
   FROM oeuvres AS O
   INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN langues AS L ON OT.id_langue = L.id_langue
@@ -202,13 +203,14 @@ $sql_en = [
   AND O.id_oeuvre = $id
   AND CURDATE() BETWEEN debut_expo AND fin_expo;",
 
-  "media"=>"SELECT nom_media, type_media, E.id_expo
+  "media"=>"SELECT DISTINCT nom_media, type_media, O.id_oeuvre, E.id_expo
   FROM medias AS M
   INNER JOIN accompagner AS AC ON AC.id_media = M.id_media
   INNER JOIN oeuvres AS O ON AC.id_oeuvre = O.id_oeuvre
   INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
   INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
-  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo;"
+  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo
+  ORDER BY type_media;"
 ];
 
 $sql_zh = [
@@ -244,7 +246,7 @@ $sql_zh = [
   AND (code_langue = 'zh')
   ORDER BY EMP.num_emp;",
 
-  "fiche_detail"=>"SELECT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
+  "fiche_detail"=>"SELECT DISTINCT O.id_oeuvre, titre_oeuvre_trad, descriptif_oeuvre_trad, nom_art, prenom_art, bio_art_trad, bio_art_trad, nom_col, info_col_trad, A.id_art, C.id_col
   FROM oeuvres AS O
   INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
   INNER JOIN langues AS L ON OT.id_langue = L.id_langue
@@ -262,13 +264,14 @@ $sql_zh = [
   AND O.id_oeuvre = $id
   AND CURDATE() BETWEEN debut_expo AND fin_expo;",
 
-  "media"=>"SELECT nom_media, type_media, E.id_expo
+  "media"=>"SELECT DISTINCT nom_media, type_media, O.id_oeuvre, E.id_expo
   FROM medias AS M
   INNER JOIN accompagner AS AC ON AC.id_media = M.id_media
   INNER JOIN oeuvres AS O ON AC.id_oeuvre = O.id_oeuvre
   INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
   INNER JOIN expositions AS E ON COMP.id_expo = E.id_expo
-  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo;"
+  WHERE O.id_oeuvre=$id AND CURDATE() BETWEEN debut_expo AND fin_expo
+  ORDER BY type_media;"
 ];
 
 if(isset($_COOKIE['lang']))

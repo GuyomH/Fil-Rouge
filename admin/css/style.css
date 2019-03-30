@@ -126,7 +126,7 @@ content: "► ";
 
 header, main
 {
-  width: 100%;
+  width: 784px; /* 200 (nav) + 20 (left-margin) + 784 + 20 (right-margin) = 1024*/
   margin: 0 20px;
 }
 
@@ -230,14 +230,15 @@ label.inline-input
 
 table#expo-emp
 {
+  width: 100%;
   background-color: #f0f0f0;
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   border-radius: 5px;
 }
 
 table#expo-emp input[type="text"]
 {
-  width: 20rem;
+  width: 1rem;
 }
 
 table#expo-emp th
@@ -254,9 +255,9 @@ table#expo-emp td
 /* input[type="date"][value*="-"]
 {
   border-width: 4px;
-}
+} */
 
-select[value="choisir"]
+/* select:not([value*="-"])
 {
   border-width: 4px;
 } */
@@ -282,6 +283,7 @@ select[value="choisir"]
 
 table.list-collab
 {
+  width: 100%;
   border-collapse: collapse;
 }
 
@@ -299,6 +301,11 @@ table.list-collab , .list-collab th , .list-collab td
 .list-collab th
 {
   color: #BF0F3D;
+}
+
+.list-collab
+{
+  margin-top: 2rem;
 }
 
 .upload-submit
@@ -396,14 +403,9 @@ ul.list, ul#prog
 
 #prog li img
 {
-  width: 150px;
-  height: auto;
-  display: block;
-}
-
-.list-collab
-{
-  margin-top: 2rem;
+  width: auto;
+  height: 150px;
+  margin-right: 2rem;
 }
 /* MAIN / FIN*/
 

@@ -71,8 +71,7 @@ foreach($q1 as $val)
       $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../collectifs/{$idCollectif}.jpg'/><p><strong>{$infoCol}</strong></p><img src='../artistes/{$idArtiste}.jpg'/><p><strong>{$bioArt}</strong></p></li>\r\n";
     }
 
-  }elseif (($nomCol == "") && ($nomArt != ""))
-  {
+  } elseif (($nomCol == "") && ($nomArt != "")) {
     if (($_COOKIE['lang']!= "fr") && empty($bioArt))
     {
       $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$prenomArt} {$nomArt}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
@@ -81,7 +80,7 @@ foreach($q1 as $val)
       $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$prenomArt} {$nomArt}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
       $OeuvreDetail .= "\t\t\t\t<li class=\"content\"><img src='../artistes/{$idArtiste}.jpg'/><p><strong>{$bioArt}</strong></p></li>\r\n";
     }
-  }else {
+  } else {
     if (($_COOKIE['lang']!= "fr") && empty($nomCol))
     {
       $OeuvreDetail .= "\t\t\t\t<li><strong><h2>{$nomCol}</h2></strong> <button class=\"toggle\">˅</button></li>\r\n";
@@ -114,14 +113,15 @@ foreach($q2 as $val)
   $nomMedia = $val['nom_media'];
   $typeMedia = $val['type_media'];
   $idExpo = $val['id_expo'];
+  $idOvr = $val['id_oeuvre'];
 
   if ($typeMedia == "image")
   {
-    $listMedia .= "\t\t<img src='../media/{$idExpo}/{$nomMedia}'/>\r\n";
+    $listMedia .= "\t\t<img src='../media/{$idOvr}/{$nomMedia}'/>\r\n";
   } else if ($typeMedia == "video") {
-    $listMedia .= "\t\t<video controls src='../media/{$idExpo}/{$nomMedia}'></video>\r\n";
+    $listMedia .= "\t\t<video controls src='../media/{$idOvr}/{$nomMedia}'></video>\r\n";
   } else {
-    $listMedia .= "\t\t<div class='audio'><audio controls src='../media/{$idExpo}/{$nomMedia}'></audio></div>\r\n";
+    $listMedia .= "\t\t<div class='audio'><audio controls src='../media/{$idOvr}/{$nomMedia}'></audio></div>\r\n";
   }
 }
 ?>
