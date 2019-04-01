@@ -1,0 +1,34 @@
+Spécifications fonctionnelles du besoins :
+
+- Coté visiteur : détail des pages, résumé du besoin (Florent)
+
+- Coté back-back : détail des pages, résumé du besoin (Guillaume)
+
+Spécifications techniques :
+
+Utilisation de l'ensemble des langages courants pour créer un  CRUD (create, read, update, delete)
+
+Techniques de programmation :
+
+PDO = sécurité
+
+Cookies coté visiteurs / Sessions coté back-office 
+
+Design : 
+
+Expliquer utilisation Photoshop et Illustrator (création du logo, plan interactif)
+
+Démarche d'analyse :
+
+Commmentaires sur la conception de la base (aller/retour MCD / MLD)
+
+Maquettage:
+
+Maquettage relativement fidèle
+
+Point-clés -> édition/création sur la même page
+
+diapo à commenter 10,11,13
+
+
+
