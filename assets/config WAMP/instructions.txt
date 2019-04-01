@@ -1,0 +1,13 @@
+Remplacer le fichier httpd-vhosts.conf
+dans le répertoire :
+C:\wamp64\bin\apache\apache2.4.35\conf\extra
+
+Accéder au site via l'ip du réseau wifi (ipconfig)
+
+Carte réseau sans fil Wi-Fi :
+
+   Suffixe DNS propre à la connexion. . . :
+   Adresse IPv6 de liaison locale. . . . .: fe80::5c91:fdd2:845a:1fa8%22
+   Adresse IPv4. . . . . . . . . . . . . .: 192.168.43.65 // IP à récupérer
+   Masque de sous-réseau. . . . . . . . . : 255.255.255.0
+   Passerelle par défaut. . . . . . . . . : 192.168.43.1 
