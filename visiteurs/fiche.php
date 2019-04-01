@@ -44,7 +44,7 @@ foreach($q1 as $val)
   // EN / ZH
   } else {
     $titreOeuvre = empty($val['titre_oeuvre_trad'])?$itf['no_trad']:$val['titre_oeuvre_trad'];
-    $descriptifOeuvre = empty($val['descriptif_trad'])?$itf['no_trad']:$val['descriptif_trad'];
+    $descriptifOeuvre = empty($val['descriptif_oeuvre_trad'])?$itf['no_trad']:$val['descriptif_oeuvre_trad'];
     $nomArt = $val['nom_art'];
     $prenomArt = $val['prenom_art'];
     $nomCol = $val['nom_col'];
