@@ -18,7 +18,7 @@ $( ".toggle" ).click(function() {
 var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)lang\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 var path = window.location.pathname;
 var page = path.split("/").pop();
-if(page == "index.php" && cookieValue == "fr")
+if(page == "index.php" && cookieValue == "")
 {
   alert('Cet applicatif est destiné à être visionné sur place avec un smartphone ou une phablette pas les visiteurs de la galerie d\'art Grand Angle');
 }
