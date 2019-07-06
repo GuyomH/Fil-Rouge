@@ -18,16 +18,6 @@ INNER JOIN composer AS C ON O.id_oeuvre = C.id_oeuvre
 INNER JOIN expositions AS E ON C.id_expo = E.id_expo
 ORDER BY titre_expo, titre_oeuvre;
 
-SELECT titre_oeuvre, libelle_type, cat_type, longueur_tri, largeur_tri, hauteur_tri, longueur_pic, hauteur_pic, titre_oeuvre_trad, descriptif_oeuvre_trad
-FROM oeuvres AS O
-INNER JOIN avoir AS AV ON O.id_oeuvre = AV.id_oeuvre
-INNER JOIN types AS T ON AV.id_type = T.id_type
-INNER JOIN deux_dimensions AS DD ON AV.id_pic = DD.id_pic
-INNER JOIN trois_dimensions AS DDD ON AV.id_tri = DDD.id_tri
-INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
-INNER JOIN langues AS L ON OT.id_langue = L.id_langue
-WHERE titre_oeuvre = 'Bilboquet';
-
 -- Sélectionner les infos d'une expo et la traduction en anglais (en) et en chinois (zh)
 SELECT titre_expo, descriptif_expo, titre_expo_trad, descriptif_expo_trad
 FROM expositions AS E
