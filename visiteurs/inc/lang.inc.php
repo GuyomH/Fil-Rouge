@@ -126,7 +126,7 @@ $sql_fr = [
 
   "liste_oeuvre"=>"SELECT EMP.num_emp, O.id_oeuvre,titre_oeuvre, nom_art, prenom_art, nom_col
   FROM expositions AS E
-  INNER JOIN Composer AS C ON E.id_expo = C.id_expo
+  INNER JOIN composer AS C ON E.id_expo = C.id_expo
   INNER JOIN emplacements AS EMP ON C.num_emp = EMP.num_emp
   INNER JOIN oeuvres AS O ON C.id_oeuvre = O.id_oeuvre
   INNER JOIN artistes AS A ON O.id_art = A.id_art
@@ -174,13 +174,13 @@ $sql_en = [
 
   "liste_oeuvre"=>"SELECT EMP.num_emp, O.id_oeuvre,titre_oeuvre_trad, nom_art, prenom_art, nom_col
   FROM expositions AS E
-  INNER JOIN Composer AS C ON E.id_expo = C.id_expo
+  INNER JOIN composer AS C ON E.id_expo = C.id_expo
   INNER JOIN emplacements AS EMP ON C.num_emp = EMP.num_emp
   INNER JOIN oeuvres AS O ON C.id_oeuvre = O.id_oeuvre
   INNER JOIN artistes AS A ON O.id_art = A.id_art
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
-  INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
-  INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
+  INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
+  INNER JOIN langues AS L ON OT.id_langue = L.id_langue
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
   AND (code_langue = 'en')
   ORDER BY EMP.num_emp;",
@@ -192,7 +192,7 @@ $sql_en = [
   INNER JOIN artistes AS A ON O.id_art = A.id_art
   INNER JOIN artistes_trad AS AT ON A.id_art = AT.id_art
   INNER JOIN langues AS L2 ON AT.id_langue = L2.id_langue
-  INNER JOIN collectifs AS C ON A.id_col = c.id_col
+  INNER JOIN collectifs AS C ON A.id_col = C.id_col
   INNER JOIN collectifs_trad AS CT ON C.id_col = CT.id_col
   INNER JOIN langues AS L3 ON CT.id_langue = L3.id_langue
   INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre
@@ -235,13 +235,13 @@ $sql_zh = [
 
   "liste_oeuvre"=>"SELECT EMP.num_emp, O.id_oeuvre,titre_oeuvre_trad, nom_art, prenom_art, nom_col
   FROM expositions AS E
-  INNER JOIN Composer AS C ON E.id_expo = C.id_expo
+  INNER JOIN composer AS C ON E.id_expo = C.id_expo
   INNER JOIN emplacements AS EMP ON C.num_emp = EMP.num_emp
   INNER JOIN oeuvres AS O ON C.id_oeuvre = O.id_oeuvre
   INNER JOIN artistes AS A ON O.id_art = A.id_art
   INNER JOIN collectifs AS COL ON A.id_col = COL.id_col
-  INNER JOIN Oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
-  INNER JOIN Langues AS L ON OT.id_langue = L.id_langue
+  INNER JOIN oeuvres_trad AS OT ON O.id_oeuvre = OT.id_oeuvre
+  INNER JOIN langues AS L ON OT.id_langue = L.id_langue
   WHERE CURDATE() BETWEEN debut_expo AND fin_expo
   AND (code_langue = 'zh')
   ORDER BY EMP.num_emp;",
@@ -253,7 +253,7 @@ $sql_zh = [
   INNER JOIN artistes AS A ON O.id_art = A.id_art
   INNER JOIN artistes_trad AS AT ON A.id_art = AT.id_art
   INNER JOIN langues AS L2 ON AT.id_langue = L2.id_langue
-  INNER JOIN collectifs AS C ON A.id_col = c.id_col
+  INNER JOIN collectifs AS C ON A.id_col = C.id_col
   INNER JOIN collectifs_trad AS CT ON C.id_col = CT.id_col
   INNER JOIN langues AS L3 ON CT.id_langue = L3.id_langue
   INNER JOIN composer AS COMP ON O.id_oeuvre = COMP.id_oeuvre

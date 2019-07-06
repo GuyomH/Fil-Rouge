@@ -1,0 +1,2 @@
+# ERROR 404
+ErrorDocument 404 https://guillaume-henaud.alwaysdata.net/visiteurs/404.php
